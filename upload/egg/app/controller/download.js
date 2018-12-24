@@ -10,15 +10,15 @@ class DownloadController extends Controller {
     const { ctx, config } = this;
     const media = await ctx.service.media.findOne(ctx.query);
     if (!media) {
-      ctx.throw('文件不存在!');
+      ctx.throw(404, '文件不存在!');
     }
     const { path: filepath, filename } = media;
     if (!filepath) {
-      ctx.throw('文件不存在!!');
+      ctx.throw(404, '文件不存在!!');
     }
     const target = path.resolve(config.static.dir, filepath);
     if (!fs.existsSync(target)) {
-      ctx.throw('文件不存在!!!');
+      ctx.throw(404, '文件不存在!!!');
     }
     this.ctx.attachment(filename);
     this.ctx.set('Content-Type', 'application/octet-stream');
