@@ -166,7 +166,6 @@ class UploadController extends Controller {
             await ctx.helper.createFile(resize_target, resize_buf);
           }
           Object.assign(item, {
-            resize,
             resize_path: resize_filepath,
             resize_url,
           });
@@ -182,7 +181,6 @@ class UploadController extends Controller {
             await ctx.helper.createFile(thumb_target, thumb_buf);
           }
           Object.assign(item, {
-            thumb,
             thumb_path: thumb_filepath,
             thumb_url,
           });
@@ -208,6 +206,7 @@ class UploadController extends Controller {
       data.push({
         ...media[0].dataValues,
         ...item,
+        ...parts.field,
       })
     }
 

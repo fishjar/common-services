@@ -1,16 +1,14 @@
 // import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import os from 'os';
 
 import Router from 'koa-router';
-import pump from 'mz-modules/pump';
 import toArray from 'stream-to-array';
 import sendToWormhole from 'stream-wormhole';
 
 import config from '../config';
 import utils from '../lib/utils';
-import models from "../models"
+import models from '../models';
 
 const router = new Router();
 

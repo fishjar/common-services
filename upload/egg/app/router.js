@@ -6,8 +6,7 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
-  router.post('/upload', controller.upload.single);
-  router.post('/upload/multiple', controller.upload.multiple);
+  router.post('/upload', controller.upload.multiple);
   router.get('/download', app.controller.download.download);
   router.resources('media', '/medias', controller.media);
 };
