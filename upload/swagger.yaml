@@ -22,8 +22,7 @@ securityDefinitions:
     name: Authorization
     in: header
 security:
-  - APIKeyHeader: []
-    JWT: []
+  - JWT: []
 paths:
   /account/login:
     post:
