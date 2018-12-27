@@ -60,10 +60,8 @@ Example
 ### 上传文件
 
 ```sh
-# 上传单个文件
+# 上传单个/多个文件
 POST /upload
-# 上传多个文件
-POST /upload/multiple
 ```
 
 Request From fields
@@ -72,6 +70,8 @@ Request From fields
 {
   resize: 256, // 等比例的长边
   thumb: 64, // 正方形剪裁
+  title: '', // 标题
+  description: '', // 描述
 }
 ```
 
@@ -93,9 +93,20 @@ Request Qeury
 ### 文件RESTful
 
 ```sh
+# egg
+POST /medias
 GET /medias
 GET /medias/:id
-POST /medias
 PUT /medias/:id
+DELETE /medias/:id
+
+# koa
+POST /medias
+POST /medias/multiple
+GET /medias
+GET /medias/:id
+PATCH /medias
+PATCH /medias/:id
+DELETE /medias
 DELETE /medias/:id
 ```
