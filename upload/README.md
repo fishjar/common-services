@@ -64,7 +64,7 @@ Example
 POST /upload
 ```
 
-Request From fields
+Accept From fields
 
 ```js
 {
