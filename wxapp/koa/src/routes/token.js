@@ -6,10 +6,10 @@ import {
 
 const router = new Router();
 
-router.get('/:appid', async (ctx, next) => {
-	const { appid } = ctx.params;
+router.get('/', async (ctx, next) => {
+	const { appid } = ctx.query
 	if (!appid) {
-		ctx.throw('缺少APPID')
+		ctx.throw('缺少APPID参数')
 	}
 	const wxapp = await models.Wxapp.findOne({ where: { appid } });
 	if (!wxapp) {
