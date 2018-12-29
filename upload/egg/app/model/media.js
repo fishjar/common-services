@@ -21,7 +21,7 @@ module.exports = app => {
     width: INTEGER,
     height: INTEGER,
   }, {
-      underscored: true, // 下划线字段
+      underscored: false, // 下划线字段
       paranoid: true, // 软删除
       tableName: 'Media',
     });

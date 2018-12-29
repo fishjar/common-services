@@ -75,7 +75,7 @@ export default (sequelize, DataTypes) => {
       }
     },
     {
-      underscored: true,
+      underscored: false,
       tableName: "Media",
       paranoid: true
     }
