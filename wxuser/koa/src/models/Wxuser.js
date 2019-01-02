@@ -31,6 +31,12 @@ export default (sequelize, DataTypes) => {
         unique: false,
         validate: {}
       },
+      expiresIn: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        unique: false,
+        validate: {}
+      },
       nickname: {
         type: DataTypes.STRING(64),
         allowNull: true,

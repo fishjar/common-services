@@ -12,6 +12,7 @@ const defaultConfig = {
   LOG_PATH: logDir,
   EXPIRES_IN: '1h',
   TOKEN_HOST: 'https://api.weixin.qq.com/cgi-bin/token',
+  CODE2SESSION_HOST: 'https://api.weixin.qq.com/sns/jscode2session',
 };
 
 const configMap = {
