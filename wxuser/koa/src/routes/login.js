@@ -30,7 +30,7 @@ router.post('/', async (ctx, next) => {
 		openid,
 	} = sessionRes;
 
-	const [wxuser, isNew] = await models.Wxuser.findOrCreate({
+	const [wxuser, isNewRecord] = await models.Wxuser.findOrCreate({
 		where: {
 			appid,
 			openid,
@@ -43,10 +43,14 @@ router.post('/', async (ctx, next) => {
 		expiresIn,
 	});
 
+	const {
+		sessionKey: _,
+		expiresIn: __,
+		...data
+	} = wxuser.get({ plain: true });
 	ctx.body = {
-		appid,
-		openid,
-		isNew,
+		...data,
+		isNewRecord,
 	};
 
 	await next();

@@ -10,25 +10,25 @@ router.post('/', async (ctx, next) => {
 		this.ctx.throw('missing params!');
 	}
 
-	const Wxuser = await models.Wxuser.findOne({
+	const wxuser = await models.Wxuser.findOne({
 		where: {
 			appid,
 			openid,
 		}
 	});
-	if (!Wxuser) {
+	if (!wxuser) {
 		ctx.throw('用户不存在');
 	}
 
 	const {
 		sessionKey,
 		expiresIn,
-	} = Wxuser;
+	} = wxuser;
 	if (!sessionKey) {
-		ctx.throw('用户未登录');
+		ctx.throw('微信未登录');
 	}
 	if ((new Date(expiresIn).getTime()) <= (Date.now())) {
-		ctx.throw('登录过期');
+		ctx.throw('微信登录过期');
 	}
 
 	// 解密
@@ -49,7 +49,7 @@ router.post('/', async (ctx, next) => {
 	} = userInfo;
 
 	// 更新资料
-	await Wxuser.update({
+	await wxuser.update({
 		nickname: nickName,
 		unionid: unionId,
 		avatar: avatarUrl,
@@ -60,19 +60,12 @@ router.post('/', async (ctx, next) => {
 	});
 
 	const {
-		id,
-	} = Wxuser;
+		sessionKey: _,
+		expiresIn: __,
+		...data
+	} = wxuser.get({ plain: true });
 
-	ctx.body = {
-		id,
-		nickname: nickName,
-		unionid: unionId,
-		avatar: avatarUrl,
-		gender,
-		city,
-		province,
-		country,
-	};
+	ctx.body = data;
 
 	await next();
 });
