@@ -31,12 +31,12 @@ router.post("/", async (ctx, next) => {
 })
 
 router.post("/multiple", async (ctx, next) => {
-  ctx.body = await models.Foo.bulkCreate(ctx.request.body)
+  ctx.body = await models.Media.bulkCreate(ctx.request.body)
   await next()
 })
 
 router.patch("/", async (ctx, next) => {
-  ctx.body = await models.User.update(ctx.request.body.fields, {
+  ctx.body = await models.Media.update(ctx.request.body.fields, {
     where: ctx.request.body.filter
   })
   await next()
