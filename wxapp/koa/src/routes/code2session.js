@@ -47,8 +47,8 @@ router.post('/', async (ctx, next) => {
 	if (errmsg) {
 		const err = new Error('获取jscode2session失败');
 		err.errors = [{
-			errorCode: errcode,
-			errorMessage: errmsg,
+			errcode,
+			errmsg,
 		}];
 		throw err;
 	}

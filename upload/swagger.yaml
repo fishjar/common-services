@@ -242,11 +242,42 @@ paths:
       responses:
         '200':
           description: 创建成功
+  /media:
+    get:
+      summary: 查询单个文件
+      description: 查询单个文件...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Media'
+    post:
+      summary: 查找或创建单个文件
+      description: 查找或创建单个文件...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Media'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Media'
 definitions:
   Media:
     type: object
     x-isModel: true
     x-plural: Medias
+    x-tableName: media
     description: 文件
     required:
       - id
@@ -343,16 +374,16 @@ definitions:
       size: 148584
       width: 600
       height: 779
-      createdAt: '2018-12-21T07:59:37.347Z'
-      updatedAt: '2018-12-21T07:59:37.347Z'
-      deletedAt: null
+      created_at: '2018-12-21T07:59:37.347Z'
+      updated_at: '2018-12-21T07:59:37.347Z'
+      deleted_at: null
       resize: 100
-      resizePath: png/7b/74/7b745b688b3d677a0a41c2c85cc56156_100.png
-      resizeUrl: >-
+      resize_path: png/7b/74/7b745b688b3d677a0a41c2c85cc56156_100.png
+      resize_url: >-
         http://dev.media.test.com/png/7b/74/7b745b688b3d677a0a41c2c85cc56156_100.png
       thumb: 64
-      thumbPath: png/7b/74/7b745b688b3d677a0a41c2c85cc56156_s64.png
-      thumbUrl: >-
+      thumb_path: png/7b/74/7b745b688b3d677a0a41c2c85cc56156_s64.png
+      thumb_url: >-
         http://dev.media.test.com/png/7b/74/7b745b688b3d677a0a41c2c85cc56156_s64.png
   UserDemo:
     type: object
@@ -434,9 +465,9 @@ definitions:
   ErrorItem:
     type: object
     properties:
-      errorCode:
+      errcode:
         type: integer
-      errorMessage:
+      errmsg:
         type: string
 responses:
   NotFound:

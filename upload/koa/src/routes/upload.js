@@ -81,14 +81,14 @@ router.post('/', async (ctx, next) => {
 				}
 				const resize_filepath = path.join(extname.slice(1), hashname.slice(0, 2), hashname.slice(2, 4), hashname + '_' + Math.max(rW, rH) + extname);
 				const resize_target = path.join(config.STATIC_DIR, resize_filepath);
-				const resizeUrl = config.BASE_URL + resize_filepath;
+				const resize_url = config.BASE_URL + resize_filepath;
 				if (!fs.existsSync(resize_target)) {
 					const resize_buf = await utils.getResize(buf, rW, rH);
 					await utils.createFile(resize_target, resize_buf);
 				}
 				Object.assign(item, {
-					resizePath: resize_filepath,
-					resizeUrl,
+					resize_path: resize_filepath,
+					resize_url,
 				});
 			}
 			// 剪裁正方形缩略图
@@ -96,21 +96,21 @@ router.post('/', async (ctx, next) => {
 				const rW = Math.min(thumb, width, height);
 				const thumb_filepath = path.join(extname.slice(1), hashname.slice(0, 2), hashname.slice(2, 4), hashname + '_s' + rW + extname);
 				const thumb_target = path.join(config.STATIC_DIR, thumb_filepath);
-				const thumbUrl = config.BASE_URL + thumb_filepath;
+				const thumb_url = config.BASE_URL + thumb_filepath;
 				if (!fs.existsSync(thumb_target)) {
 					const thumb_buf = await utils.getThumb(buf, thumb, width, height);
 					await utils.createFile(thumb_target, thumb_buf);
 				}
 				Object.assign(item, {
-					thumbPath: thumb_filepath,
-					thumbUrl,
+					thumb_path: thumb_filepath,
+					thumb_url,
 				});
 			}
 		}
 
 		// 保存文件信息到数据库
 		const { title, description } = fields;
-		const media = await models.Media.findOrCreate({
+		const [media, is_new_record] = await models.Media.findOrCreate({
 			where: {
 				hashname,
 			},
@@ -129,9 +129,10 @@ router.post('/', async (ctx, next) => {
 			},
 		});
 		resData.push({
-			...media[0].dataValues,
+			...media.get({ plain: true }),
 			...item,
-			...fields,
+			...parts.field,
+			is_new_record,
 		})
 	}
 

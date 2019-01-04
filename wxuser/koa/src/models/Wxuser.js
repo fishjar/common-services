@@ -25,13 +25,13 @@ export default (sequelize, DataTypes) => {
         unique: false,
         validate: {}
       },
-      sessionKey: {
+      session_key: {
         type: DataTypes.STRING(64),
         allowNull: true,
         unique: false,
         validate: {}
       },
-      expiresIn: {
+      expires_time: {
         type: DataTypes.DATE,
         allowNull: true,
         unique: false,
@@ -78,9 +78,10 @@ export default (sequelize, DataTypes) => {
       }
     },
     {
-      underscored: false,
-      tableName: "Wxuser",
-      paranoid: true
+      underscored: true, // 下划线字段
+      paranoid: true, // 软删除
+      freezeTableName: true, // 禁用修改表名
+      tableName: 'wxuser', // 定义表的名称
     }
   )
   return Wxuser

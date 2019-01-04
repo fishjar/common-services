@@ -15,10 +15,9 @@ router.get('/', async (ctx, next) => {
 	if (!wxapp) {
 		ctx.throw('APPID错误或WXAPP不存在')
 	}
-	let { accessToken, expiresIn } = wxapp;
 
 	// 如果access_token过期或不存在
-	if (!(accessToken && expiresIn && ((new Date(expiresIn).getTime()) > (Date.now())))) {
+	if (!(wxapp.access_token && wxapp.expires_time && ((new Date(wxapp.expires_time).getTime()) > (Date.now())))) {
 		const grant_type = 'client_credential';
 		const { id, secret } = wxapp;
 		const tokenResponse = await fetchToken({
@@ -35,23 +34,26 @@ router.get('/', async (ctx, next) => {
 			const err = new Error('获取token出错');
 			// err.statusCode = 500;
 			err.errors = [{
-				errorCode: errcode,
-				errorMessage: errmsg,
+				errcode,
+				errmsg,
 			}];
 			throw err;
 		}
-		accessToken = access_token;
-		expiresIn = new Date(Date.now() + expires_in * 1000);
+		const expires_time = new Date(Date.now() + expires_in * 1000);
 		await wxapp.update({
-			accessToken,
-			expiresIn,
+			access_token,
+			expires_time,
 		});
 	}
 
+	const {
+		access_token,
+		expires_time,
+	} = wxapp.get({ plain: true });
 	ctx.body = {
 		appid,
-		accessToken,
-		expiresIn,
+		access_token,
+		expires_time,
 	};
 	await next();
 });

@@ -30,27 +30,27 @@ router.post('/', async (ctx, next) => {
 		openid,
 	} = sessionRes;
 
-	const [wxuser, isNewRecord] = await models.Wxuser.findOrCreate({
+	const [wxuser, is_new_record] = await models.Wxuser.findOrCreate({
 		where: {
 			appid,
 			openid,
 		},
 	});
-	const sessionKey = session_key;
-	const expiresIn = new Date(Date.now() + expires_in * 1000);
+	const session_key = session_key;
+	const expires_time = new Date(Date.now() + expires_in * 1000);
 	await wxuser.update({
-		sessionKey,
-		expiresIn,
+		session_key,
+		expires_time,
 	});
 
 	const {
-		sessionKey: _,
-		expiresIn: __,
+		session_key: _,
+		expires_time: __,
 		...data
 	} = wxuser.get({ plain: true });
 	ctx.body = {
 		...data,
-		isNewRecord,
+		is_new_record,
 	};
 
 	await next();

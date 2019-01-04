@@ -7,7 +7,7 @@ export default (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV1,
         primaryKey: true
       },
-      appType: {
+      app_type: {
         type: DataTypes.TINYINT,
         allowNull: false,
         unique: false,
@@ -40,13 +40,13 @@ export default (sequelize, DataTypes) => {
         unique: false,
         validate: {}
       },
-      accessToken: {
+      access_token: {
         type: DataTypes.STRING(512),
         allowNull: true,
         unique: false,
         validate: {}
       },
-      expiresIn: {
+      expires_time: {
         type: DataTypes.DATE,
         allowNull: true,
         unique: false,
@@ -54,9 +54,10 @@ export default (sequelize, DataTypes) => {
       }
     },
     {
-      underscored: false,
-      tableName: "Wxapp",
-      paranoid: true
+      underscored: true, // 下划线字段
+      paranoid: true, // 软删除
+      freezeTableName: true, // 禁用修改表名
+      tableName: 'wxapp', // 定义表的名称
     }
   )
   return Wxapp

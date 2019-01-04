@@ -9,13 +9,13 @@ router.get("/", async (ctx, next) => {
 });
 
 router.post("/", async (ctx, next) => {
-  const [data, isNewRecord] = await models.Wxrefund.findOrCreate({
+  const [wxrefund, is_new_record] = await models.Wxrefund.findOrCreate({
     where: ctx.request.body,
   });
   ctx.body = {
-    // ...data.toJSON(),
-    ...data.get({ plain: true }),
-    isNewRecord,
+    // ...wxrefund.toJSON(),
+    ...wxrefund.get({ plain: true }),
+    is_new_record,
   };
   await next();
 });

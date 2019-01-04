@@ -188,11 +188,42 @@ paths:
       responses:
         '200':
           description: 创建成功
+  /wxuser:
+    get:
+      summary: 查询单个微信用户
+      description: 查询单个微信用户...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Wxuser'
+    post:
+      summary: 查找或创建单个微信用户
+      description: 查找或创建单个微信用户...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Wxuser'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Wxuser'
 definitions:
   Wxuser:
     type: object
     x-isModel: true
     x-plural: Wxusers
+    x-tableName: wxuser
     description: 微信用户
     required:
       - id
@@ -221,11 +252,16 @@ definitions:
         description: OPENID
         x-message: 请输入
         x-showTable: true
-      sessionKey:
+      session_key:
         type: string
         format: string(64)
         description: SESSIONKEY
         x-message: 请输入
+      expires_time:
+        type: string
+        format: date-time
+        description: 令牌过期时间
+        x-message: 请选择
       nickname:
         type: string
         format: string(64)
@@ -358,9 +394,9 @@ definitions:
   ErrorItem:
     type: object
     properties:
-      errorCode:
+      errcode:
         type: integer
-      errorMessage:
+      errmsg:
         type: string
 responses:
   NotFound:

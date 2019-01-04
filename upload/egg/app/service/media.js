@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 
 class RESTService extends Service {
 
-  async list({ pageNum = 1, pageSize = 10, sorter, ...where }) {
+  async list({ page_num = 1, page_size = 10, sorter, ...where }) {
     let order = [];
     if (Array.isArray(sorter)) {
       order = [...sorter.map(item => item.split('__'))];
@@ -13,8 +13,8 @@ class RESTService extends Service {
     }
     return this.ctx.model.Media.findAndCountAll({
       where,
-      offset: (pageNum - 1) * pageSize,
-      limit: pageSize,
+      offset: (page_num - 1) * page_size,
+      limit: page_size,
       order,
     });
   }

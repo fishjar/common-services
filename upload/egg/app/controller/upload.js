@@ -90,7 +90,7 @@ class UploadController extends Controller {
 
     // 保存文件信息到数据库
     const { title, description } = stream.fields;
-    const media = await ctx.service.media.findOrCreate({ hashname }, {
+    const [media, is_new_record] = await ctx.service.media.findOrCreate({ hashname }, {
       mime,
       filename,
       title,
@@ -105,15 +105,16 @@ class UploadController extends Controller {
     });
 
     ctx.body = {
-      ...media[0].dataValues,
+      ...media.get({ plain: true }),
       ...item,
+      is_new_record,
     };
   }
 
   async multiple() {
     const { ctx, config } = this;
     const parts = ctx.multipart({ autoFields: true });
-    const data = [];
+    const resData = [];
     let stream;
     while ((stream = await parts()) != null) {
       const item = {};
@@ -160,14 +161,14 @@ class UploadController extends Controller {
           }
           const resize_filepath = path.join(extname.slice(1), hashname.slice(0, 2), hashname.slice(2, 4), hashname + '_' + Math.max(rW, rH) + extname);
           const resize_target = path.join(config.static.dir, resize_filepath);
-          const resizeUrl = config.baseUrl + resize_filepath;
+          const resize_url = config.baseUrl + resize_filepath;
           if (!fs.existsSync(resize_target)) {
             const resize_buf = await ctx.helper.getResize(buf, rW, rH);
             await ctx.helper.createFile(resize_target, resize_buf);
           }
           Object.assign(item, {
-            resizePath: resize_filepath,
-            resizeUrl,
+            resize_path: resize_filepath,
+            resize_url,
           });
         }
         // 剪裁正方形缩略图
@@ -181,15 +182,15 @@ class UploadController extends Controller {
             await ctx.helper.createFile(thumb_target, thumb_buf);
           }
           Object.assign(item, {
-            thumbPath: thumb_filepath,
-            thumbUrl,
+            thumb_path: thumb_filepath,
+            thumb_url,
           });
         }
       }
 
       // 保存文件信息到数据库
       const { title, description } = parts.field;
-      const media = await ctx.service.media.findOrCreate({ hashname }, {
+      const [media, is_new_record] = await ctx.service.media.findOrCreate({ hashname }, {
         mime,
         filename,
         title,
@@ -203,14 +204,15 @@ class UploadController extends Controller {
         height,
       });
 
-      data.push({
-        ...media[0].dataValues,
+      resData.push({
+        ...media.get({ plain: true }),
         ...item,
         ...parts.field,
+        is_new_record,
       })
     }
 
-    ctx.body = data;
+    ctx.body = resData;
   }
 
 }

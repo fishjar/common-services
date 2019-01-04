@@ -231,9 +231,10 @@ export default (sequelize, DataTypes) => {
       },
     },
     {
-      underscored: false,
-      tableName: "Wxpay",
-      paranoid: true,
+      underscored: true, // 下划线字段
+      paranoid: true, // 软删除
+      freezeTableName: true, // 禁用修改表名
+      tableName: 'wxpay', // 定义表的名称
     }
   );
   return Wxpay;

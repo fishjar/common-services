@@ -203,15 +203,46 @@ paths:
       responses:
         '200':
           description: 创建成功
+  /wxapp:
+    get:
+      summary: 查询单个微信号
+      description: 查询单个微信号...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Wxapp'
+    post:
+      summary: 查找或创建单个微信号
+      description: 查找或创建单个微信号...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Wxapp'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Wxapp'
 definitions:
   Wxapp:
     type: object
     x-isModel: true
     x-plural: Wxapps
+    x-tableName: wxapp
     description: 微信号
     required:
       - id
-      - appType
+      - app_type
       - name
       - appid
       - secret
@@ -221,7 +252,7 @@ definitions:
         format: uuid
         description: ID
         uniqueItems: true
-      appType:
+      app_type:
         type: integer
         format: int4
         enum:
@@ -265,12 +296,12 @@ definitions:
         format: string(64)
         description: APP秘钥
         x-message: 请输入
-      accessToken:
+      access_token:
         type: string
         format: string(512)
         description: APP令牌
         x-message: 请输入
-      expiresIn:
+      expires_time:
         type: string
         format: date-time
         description: 令牌过期时间
@@ -361,9 +392,9 @@ definitions:
   ErrorItem:
     type: object
     properties:
-      errorCode:
+      errcode:
         type: integer
-      errorMessage:
+      errmsg:
         type: string
   Token:
     type: object

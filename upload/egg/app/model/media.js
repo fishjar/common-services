@@ -21,9 +21,10 @@ module.exports = app => {
     width: INTEGER,
     height: INTEGER,
   }, {
-      underscored: false, // 下划线字段
+      underscored: true, // 下划线字段
       paranoid: true, // 软删除
-      tableName: 'Media',
+      freezeTableName: true, // 禁用修改表名
+      tableName: 'media', // 定义表的名称
     });
 
   return Media;

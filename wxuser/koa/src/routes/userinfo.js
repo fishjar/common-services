@@ -21,20 +21,20 @@ router.post('/', async (ctx, next) => {
 	}
 
 	const {
-		sessionKey,
-		expiresIn,
+		session_key,
+		expires_time,
 	} = wxuser;
-	if (!sessionKey) {
+	if (!session_key) {
 		ctx.throw('微信未登录');
 	}
-	if ((new Date(expiresIn).getTime()) <= (Date.now())) {
+	if ((new Date(expires_time).getTime()) <= (Date.now())) {
 		ctx.throw('微信登录过期');
 	}
 
 	// 解密
 	const userInfo = utils.encryData({
 		appid,
-		sessionKey,
+		sessionKey: session_key,
 		encryptedData,
 		iv,
 	});
@@ -60,8 +60,8 @@ router.post('/', async (ctx, next) => {
 	});
 
 	const {
-		sessionKey: _,
-		expiresIn: __,
+		session_key: _,
+		expires_time: __,
 		...data
 	} = wxuser.get({ plain: true });
 
