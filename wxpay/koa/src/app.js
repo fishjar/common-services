@@ -8,6 +8,7 @@ import errorHandler from './middleware/errorHandler';
 import reqBodyLog from './middleware/reqBodyLog';
 import jwtAuth from './middleware/jwtAuth';
 import jwtRolling from './middleware/jwtRolling';
+import xmlBody from './middleware/xmlBody';
 import koaBody from './middleware/koaBody';
 
 import router from './routes';
@@ -19,6 +20,7 @@ app
 	.use(koalogger())
 	.use(compress())
 	.use(cors())
+	.use(xmlBody())
 	.use(koaBody())
 	.use(reqBodyLog())
 	// .use(jwtAuth())

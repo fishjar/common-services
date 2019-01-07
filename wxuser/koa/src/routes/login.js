@@ -36,7 +36,6 @@ router.post('/', async (ctx, next) => {
 			openid,
 		},
 	});
-	const session_key = session_key;
 	const expires_time = new Date(Date.now() + expires_in * 1000);
 	await wxuser.update({
 		session_key,

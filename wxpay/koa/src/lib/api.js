@@ -2,6 +2,7 @@ import rq from './request';
 import config from '../config';
 const {
   FEEDS_HOST,
+  UNIFIEDORDER_HOST,
 } = config;
 
 export async function fetchFeeds(qs) {
@@ -21,6 +22,20 @@ export async function fetchFeeds(qs) {
   });
 }
 
+export async function unifiedorder(body) {
+  return rq({
+    method: 'POST',
+    uri: UNIFIEDORDER_HOST,
+    headers: {
+      'content-type': 'text/html',
+    },
+    json: false,
+    body,
+  });
+}
+
+
 export default {
   fetchFeeds,
+  unifiedorder,
 }

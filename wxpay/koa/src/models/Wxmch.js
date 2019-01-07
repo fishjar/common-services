@@ -16,7 +16,7 @@ export default (sequelize, DataTypes) => {
       mchid: {
         type: DataTypes.STRING(32),
         allowNull: false,
-        unique: false,
+        unique: true,
         validate: {},
       },
       secret: {
