@@ -12,6 +12,9 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
         unique: false,
         validate: {},
+        validate: {
+          len: [4, 64],
+        },
       },
       nickname: {
         type: DataTypes.STRING(64),

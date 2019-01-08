@@ -18,6 +18,9 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {},
+        validate: {
+          len: [4, 64],
+        },
       },
       mobile: {
         type: DataTypes.STRING(11),

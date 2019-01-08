@@ -1,5 +1,5 @@
-const XML = require('pixl-xml');
-const crypto = require('crypto');
+import XML from 'pixl-xml';
+import crypto from 'crypto';
 
 export const foo = function () {
   return 'bar'
