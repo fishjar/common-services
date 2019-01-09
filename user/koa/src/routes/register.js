@@ -1,5 +1,6 @@
 import Router from "koa-router";
 import models from "../models";
+import utils from '../lib/utils';
 
 const router = new Router();
 
@@ -33,15 +34,16 @@ router.get("/checkuser", async (ctx, next) => {
   await next();
 });
 
+// 用户密码注册
 router.post("/username", async (ctx, next) => {
   const {
     username,
     password,
-  } = ctx.body;
+  } = ctx.request.body;
   if (!username || !password) {
-    ctx.throw('缺少参数')
+    ctx.throw('用户名或密码不能为空')
   }
-  let pwdauth = await models.PwdAuth.findOne({
+  const pwdauth = await models.PwdAuth.findOne({
     where: {
       username,
     }
@@ -51,20 +53,34 @@ router.post("/username", async (ctx, next) => {
   }
 
   const { id: user_id } = await models.User.create({
-    username,
+    name: username,
   });
-  const password = utils.pwdSign({ user_id });
+  const pwdSign = utils.pwdSign({ password });
   const verify_time = new Date(Date.now());
-  pwdauth = await models.PwdAuth.create({
+  await models.PwdAuth.create({
     user_id,
     username,
-    password,
+    password: pwdSign,
     verify_time,
   });
 
+  ctx.body = {
+    user_id,
+    username,
+  };
 
+  await next();
+});
 
+// 手机注册
+router.post("/mobile", async (ctx, next) => {
+  //
+  await next();
+});
 
+// 邮箱注册
+router.post("/email", async (ctx, next) => {
+  //
   await next();
 });
 

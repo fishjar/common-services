@@ -9,8 +9,16 @@ export const foo = function () {
   return 'bar'
 };
 
-export const pwdSign = function ({ user_id }) {
-  const sign = crypto.createHash('md5').update(user_id).update(PWD_SALT).digest('hex').toUpperCase();
+export const pwdSign = function ({ password }) {
+  const sign = crypto.createHash('md5')
+    .update(password)
+    .update(password)
+    .update(PWD_SALT)
+    .update(PWD_SALT)
+    .update(PWD_SALT)
+    .digest('hex')
+    .toUpperCase();
+  console.log(sign)
   return sign;
 };
 

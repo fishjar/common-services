@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING(64),
-        allowNull: true,
+        allowNull: false,
         unique: false,
         validate: {},
         validate: {

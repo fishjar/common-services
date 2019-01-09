@@ -11,7 +11,7 @@ fse.ensureDirSync(logDir);
 const defaultConfig = {
   LOG_PATH: logDir,
   EXPIRES_IN: '1h',
-  WXAPP_HOST: 'http://localhost:3001',
+  WXAPP_HOST: 'http://localhost:3002',
 };
 
 const configMap = {

@@ -1,6 +1,6 @@
 import app from './app';
 import db from './models';
-const port = process.env.NODE_PORT || 3000;
+const port = process.env.NODE_PORT || 3001;
 
 db.sequelize.sync().then(() => {
 	app.listen(port);
