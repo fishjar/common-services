@@ -12,12 +12,14 @@ export const LOG_PATH = logDir;
 export const EXPIRES_IN = '1h';
 export const FEEDS_HOST = 'https://api.github.com/feeds';
 export const PWD_SALT = '123456';
+export const WXUSER_HOST = 'http://localhost:3004';
 
 const defaultConfig = {
   LOG_PATH,
   EXPIRES_IN,
   FEEDS_HOST,
   PWD_SALT,
+  WXUSER_HOST,
 };
 
 const configMap = {

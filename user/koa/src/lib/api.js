@@ -2,6 +2,7 @@ import rq from './request';
 import config from '../config';
 const {
   FEEDS_HOST,
+  WXUSER_HOST,
 } = config;
 
 export async function fetchFeeds(qs) {
@@ -21,6 +22,15 @@ export async function fetchFeeds(qs) {
   });
 }
 
+export async function wxLogin(body) {
+  return rq({
+    method: 'POST',
+    uri: `${WXUSER_HOST}/login`,
+    body,
+  });
+}
+
 export default {
   fetchFeeds,
+  wxLogin,
 }

@@ -5,5 +5,6 @@ export default () => jwtKoa({ secret: JWT_SECRET }).unless({
   path: [
     // /^\/account\/login/,
     /^\/login/,
+    /^\/register/,
   ]
 });

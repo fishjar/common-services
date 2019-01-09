@@ -8,10 +8,16 @@ import productionConfig from './config.production';
 const logDir = path.resolve(__dirname, '../log');
 fse.ensureDirSync(logDir);
 
+export const LOG_PATH = logDir;
+export const EXPIRES_IN = '1h';
+export const FEEDS_HOST = 'https://api.github.com/feeds';
+export const WXAPP_HOST = 'http://localhost:3002';
+
 const defaultConfig = {
-  LOG_PATH: logDir,
-  EXPIRES_IN: '1h',
-  WXAPP_HOST: 'http://localhost:3002',
+  LOG_PATH,
+  EXPIRES_IN,
+  FEEDS_HOST,
+  WXAPP_HOST,
 };
 
 const configMap = {

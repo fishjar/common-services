@@ -9,6 +9,9 @@ import {
 import {
   EXPIRES_IN,
 } from '../config';
+import {
+  wxLogin,
+} from '../lib/api';
 
 const Op = Sequelize.Op;
 const router = new Router();
@@ -24,7 +27,7 @@ router.post("/username", async (ctx, next) => {
   }
 
   const pwdSign = utils.pwdSign({ password });
-  const pwdauth = await models.PwdAuth.findOne({
+  const pwdAuth = await models.PwdAuth.findOne({
     where: {
       [Op.or]: [
         { username: username, password: pwdSign, },
@@ -33,13 +36,12 @@ router.post("/username", async (ctx, next) => {
       ]
     }
   });
-  if (!pwdauth) {
+  if (!pwdAuth) {
     ctx.throw('帐号或密码错误')
   }
 
   const authtoken = jwt.sign({
-    username,
-    user_id: pwdauth.user_id,
+    user_id: pwdAuth.user_id,
   }, JWT_SECRET, { expiresIn: EXPIRES_IN });
 
   ctx.body = {
@@ -64,7 +66,61 @@ router.post("/email", async (ctx, next) => {
 
 // 微信登录
 router.post("/weixin", async (ctx, next) => {
-  //
+  const auth_type = 'weixin';
+  const {
+    appid,
+    code,
+  } = ctx.request.body;
+  if (!appid) {
+    ctx.throw('appid不能为空!');
+  }
+  if (!code) {
+    ctx.throw('code不能为空!');
+  }
+  const wxLoginRes = await wxLogin({
+    appid,
+    code,
+  });
+  if (!wxLoginRes) {
+    ctx.throw('微信登录失败');
+  }
+  const {
+    openid
+  } = wxLoginRes;
+  if (!openid) {
+    ctx.throw('微信登录错误');
+  }
+
+  let thirdAuth = await models.ThirdAuth.findOne({
+    where: {
+      auth_type,
+      auth_id: openid,
+    },
+  });
+
+  // 帐号不存在
+  if (!thirdAuth) {
+    const { id: user_id } = await models.User.create({
+      name: Math.random().toString(36).substr(2, 16),
+    });
+    const verify_time = new Date(Date.now());
+    thirdAuth = await models.ThirdAuth.create({
+      user_id,
+      auth_type,
+      auth_id: openid,
+      verify_time,
+    });
+  }
+
+  const authtoken = jwt.sign({
+    user_id: thirdAuth.user_id,
+  }, JWT_SECRET, { expiresIn: EXPIRES_IN });
+
+  ctx.body = {
+    authtoken,
+    expires_in: EXPIRES_IN,
+  }
+
   await next();
 });
 
