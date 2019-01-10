@@ -3,25 +3,29 @@
 ## 目录
 
 ```sh
-├── upload # 文件上传下载
-│   ├── egg
-│   ├── koa
-│   ├── README.md
-│   └── swagger.yaml
-└── wxpay # 微信支付
-
+├── corp
+├── deliver
+├── LICENSE
+├── order
+├── README.md
+├── staff
+├── upload
+├── user
+├── wxapp
+├── wxpay
+└── wxuser
 ```
-
-## 文档
-
-- [文件上传下载](./upload)
 
 ## 开发端口分配
 
-| app    | app port | inspect port | remark |
-|--------|----------|--------------|--------|
-| upload | 3000     | 9300         |        |
-| user   | 3001     | 9301         |        |
-| wxapp  | 3002     | 9302         |        |
-| wxpay  | 3003     | 9303         |        |
-| wxuser | 3004     | 9304         |        |
+| app     | app port | inspect port | remark             |
+|---------|----------|--------------|--------------------|
+| upload  | 3000     | 9300         | [文件上传下载](./upload) |
+| user    | 3001     | 9301         | 用户及登录              |
+| wxapp   | 3002     | 9302         | 微信APP              |
+| wxpay   | 3003     | 9303         | 微信支付               |
+| wxuser  | 3004     | 9304         | 微信用户               |
+| corp    | 3005     | 9305         | 企业                 |
+| deliver | 3006     | 9306         | 快递                 |
+| order   | 3007     | 9307         | 订单及支付              |
+| staff   | 3008     | 9308         | 员工及权限              |
