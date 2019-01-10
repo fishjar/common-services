@@ -108,6 +108,18 @@ export default (sequelize, DataTypes) => {
         unique: false,
         validate: {},
       },
+      sku_info: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        unique: false,
+        validate: {},
+      },
+      deliver_info: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        unique: false,
+        validate: {},
+      },
       remark: {
         type: DataTypes.TEXT,
         allowNull: true,

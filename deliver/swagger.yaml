@@ -54,23 +54,23 @@ paths:
           $ref: '#/responses/Unauthorized'
         '404':
           $ref: '#/responses/NotFound'
-  /orders:
+  /addrs:
     post:
-      summary: 创建单个订单
-      description: 创建单个订单...
+      summary: 创建单个收件地址
+      description: 创建单个收件地址...
       parameters:
         - in: body
           name: body
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/Order'
+            $ref: '#/definitions/Addr'
       responses:
         '200':
           description: 创建成功
     get:
-      summary: 查询多个订单
-      description: 查询多个订单...
+      summary: 查询多个收件地址
+      description: 查询多个收件地址...
       parameters:
         - in: query
           name: pageNum
@@ -97,10 +97,10 @@ paths:
               rows:
                 type: array
                 items:
-                  $ref: '#/definitions/Order'
+                  $ref: '#/definitions/Addr'
     patch:
-      summary: 更新多个订单
-      description: 更新多个订单...
+      summary: 更新多个收件地址
+      description: 更新多个收件地址...
       parameters:
         - in: body
           name: body
@@ -108,13 +108,13 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Order'
+              $ref: '#/definitions/Addr'
       responses:
         '200':
           description: 更新成功
     delete:
-      summary: 删除多个订单
-      description: 删除多个订单...
+      summary: 删除多个收件地址
+      description: 删除多个收件地址...
       parameters:
         - in: body
           name: body
@@ -128,10 +128,10 @@ paths:
       responses:
         '200':
           description: 更新成功
-  '/orders/{id}':
+  '/addrs/{id}':
     get:
-      summary: 查询单个订单
-      description: 查询单个订单..
+      summary: 查询单个收件地址
+      description: 查询单个收件地址..
       parameters:
         - in: path
           name: id
@@ -142,10 +142,10 @@ paths:
         '200':
           description: 查询成功
           schema:
-            $ref: '#/definitions/Order'
+            $ref: '#/definitions/Addr'
     patch:
-      summary: 修改单个订单
-      description: 修改单个订单..
+      summary: 修改单个收件地址
+      description: 修改单个收件地址..
       parameters:
         - in: path
           name: id
@@ -157,13 +157,13 @@ paths:
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/Order'
+            $ref: '#/definitions/Addr'
       responses:
         '200':
           description: 修改成功
     delete:
-      summary: 删除单个订单
-      description: 删除单个订单..
+      summary: 删除单个收件地址
+      description: 删除单个收件地址..
       parameters:
         - in: path
           name: id
@@ -173,10 +173,10 @@ paths:
       responses:
         '200':
           description: 删除成功
-  /orders/multiple:
+  /addrs/multiple:
     post:
-      summary: 创建多个订单
-      description: 创建多个订单...
+      summary: 创建多个收件地址
+      description: 创建多个收件地址...
       parameters:
         - in: body
           name: body
@@ -184,14 +184,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Order'
+              $ref: '#/definitions/Addr'
       responses:
         '200':
           description: 创建成功
-  /order:
+  /addr:
     get:
-      summary: 查询单个订单
-      description: 查询单个订单...
+      summary: 查询单个收件地址
+      description: 查询单个收件地址...
       parameters:
         - in: query
           name: id
@@ -202,39 +202,39 @@ paths:
         '200':
           description: 查询成功
           schema:
-            $ref: '#/definitions/Order'
+            $ref: '#/definitions/Addr'
     post:
-      summary: 查找或创建单个订单
-      description: 查找或创建单个订单...
+      summary: 查找或创建单个收件地址
+      description: 查找或创建单个收件地址...
       parameters:
         - in: body
           name: body
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/Order'
+            $ref: '#/definitions/Addr'
       responses:
         '200':
           description: 创建成功
           schema:
-            $ref: '#/definitions/Order'
-  /orderskus:
+            $ref: '#/definitions/Addr'
+  /waybills:
     post:
-      summary: 创建单个订单
-      description: 创建单个订单...
+      summary: 创建单个快递单
+      description: 创建单个快递单...
       parameters:
         - in: body
           name: body
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/OrderSku'
+            $ref: '#/definitions/Waybill'
       responses:
         '200':
           description: 创建成功
     get:
-      summary: 查询多个订单
-      description: 查询多个订单...
+      summary: 查询多个快递单
+      description: 查询多个快递单...
       parameters:
         - in: query
           name: pageNum
@@ -261,10 +261,10 @@ paths:
               rows:
                 type: array
                 items:
-                  $ref: '#/definitions/OrderSku'
+                  $ref: '#/definitions/Waybill'
     patch:
-      summary: 更新多个订单
-      description: 更新多个订单...
+      summary: 更新多个快递单
+      description: 更新多个快递单...
       parameters:
         - in: body
           name: body
@@ -272,13 +272,13 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/OrderSku'
+              $ref: '#/definitions/Waybill'
       responses:
         '200':
           description: 更新成功
     delete:
-      summary: 删除多个订单
-      description: 删除多个订单...
+      summary: 删除多个快递单
+      description: 删除多个快递单...
       parameters:
         - in: body
           name: body
@@ -292,10 +292,10 @@ paths:
       responses:
         '200':
           description: 更新成功
-  '/orderskus/{id}':
+  '/waybills/{id}':
     get:
-      summary: 查询单个订单
-      description: 查询单个订单..
+      summary: 查询单个快递单
+      description: 查询单个快递单..
       parameters:
         - in: path
           name: id
@@ -306,10 +306,10 @@ paths:
         '200':
           description: 查询成功
           schema:
-            $ref: '#/definitions/OrderSku'
+            $ref: '#/definitions/Waybill'
     patch:
-      summary: 修改单个订单
-      description: 修改单个订单..
+      summary: 修改单个快递单
+      description: 修改单个快递单..
       parameters:
         - in: path
           name: id
@@ -321,13 +321,13 @@ paths:
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/OrderSku'
+            $ref: '#/definitions/Waybill'
       responses:
         '200':
           description: 修改成功
     delete:
-      summary: 删除单个订单
-      description: 删除单个订单..
+      summary: 删除单个快递单
+      description: 删除单个快递单..
       parameters:
         - in: path
           name: id
@@ -337,10 +337,10 @@ paths:
       responses:
         '200':
           description: 删除成功
-  /orderskus/multiple:
+  /waybills/multiple:
     post:
-      summary: 创建多个订单
-      description: 创建多个订单...
+      summary: 创建多个快递单
+      description: 创建多个快递单...
       parameters:
         - in: body
           name: body
@@ -348,14 +348,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/OrderSku'
+              $ref: '#/definitions/Waybill'
       responses:
         '200':
           description: 创建成功
-  /ordersku:
+  /waybill:
     get:
-      summary: 查询单个订单
-      description: 查询单个订单...
+      summary: 查询单个快递单
+      description: 查询单个快递单...
       parameters:
         - in: query
           name: id
@@ -366,39 +366,39 @@ paths:
         '200':
           description: 查询成功
           schema:
-            $ref: '#/definitions/OrderSku'
+            $ref: '#/definitions/Waybill'
     post:
-      summary: 查找或创建单个订单
-      description: 查找或创建单个订单...
+      summary: 查找或创建单个快递单
+      description: 查找或创建单个快递单...
       parameters:
         - in: body
           name: body
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/OrderSku'
+            $ref: '#/definitions/Waybill'
       responses:
         '200':
           description: 创建成功
           schema:
-            $ref: '#/definitions/OrderSku'
-  /pays:
+            $ref: '#/definitions/Waybill'
+  /expresses:
     post:
-      summary: 创建单个支付单
-      description: 创建单个支付单...
+      summary: 创建单个快递公司
+      description: 创建单个快递公司...
       parameters:
         - in: body
           name: body
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/Pay'
+            $ref: '#/definitions/Express'
       responses:
         '200':
           description: 创建成功
     get:
-      summary: 查询多个支付单
-      description: 查询多个支付单...
+      summary: 查询多个快递公司
+      description: 查询多个快递公司...
       parameters:
         - in: query
           name: pageNum
@@ -425,10 +425,10 @@ paths:
               rows:
                 type: array
                 items:
-                  $ref: '#/definitions/Pay'
+                  $ref: '#/definitions/Express'
     patch:
-      summary: 更新多个支付单
-      description: 更新多个支付单...
+      summary: 更新多个快递公司
+      description: 更新多个快递公司...
       parameters:
         - in: body
           name: body
@@ -436,13 +436,13 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Pay'
+              $ref: '#/definitions/Express'
       responses:
         '200':
           description: 更新成功
     delete:
-      summary: 删除多个支付单
-      description: 删除多个支付单...
+      summary: 删除多个快递公司
+      description: 删除多个快递公司...
       parameters:
         - in: body
           name: body
@@ -456,10 +456,10 @@ paths:
       responses:
         '200':
           description: 更新成功
-  '/pays/{id}':
+  '/expresses/{id}':
     get:
-      summary: 查询单个支付单
-      description: 查询单个支付单..
+      summary: 查询单个快递公司
+      description: 查询单个快递公司..
       parameters:
         - in: path
           name: id
@@ -470,10 +470,10 @@ paths:
         '200':
           description: 查询成功
           schema:
-            $ref: '#/definitions/Pay'
+            $ref: '#/definitions/Express'
     patch:
-      summary: 修改单个支付单
-      description: 修改单个支付单..
+      summary: 修改单个快递公司
+      description: 修改单个快递公司..
       parameters:
         - in: path
           name: id
@@ -485,13 +485,13 @@ paths:
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/Pay'
+            $ref: '#/definitions/Express'
       responses:
         '200':
           description: 修改成功
     delete:
-      summary: 删除单个支付单
-      description: 删除单个支付单..
+      summary: 删除单个快递公司
+      description: 删除单个快递公司..
       parameters:
         - in: path
           name: id
@@ -501,10 +501,10 @@ paths:
       responses:
         '200':
           description: 删除成功
-  /pays/multiple:
+  /expresses/multiple:
     post:
-      summary: 创建多个支付单
-      description: 创建多个支付单...
+      summary: 创建多个快递公司
+      description: 创建多个快递公司...
       parameters:
         - in: body
           name: body
@@ -512,14 +512,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Pay'
+              $ref: '#/definitions/Express'
       responses:
         '200':
           description: 创建成功
-  /pay:
+  /express:
     get:
-      summary: 查询单个支付单
-      description: 查询单个支付单...
+      summary: 查询单个快递公司
+      description: 查询单个快递公司...
       parameters:
         - in: query
           name: id
@@ -530,369 +530,128 @@ paths:
         '200':
           description: 查询成功
           schema:
-            $ref: '#/definitions/Pay'
+            $ref: '#/definitions/Express'
     post:
-      summary: 查找或创建单个支付单
-      description: 查找或创建单个支付单...
+      summary: 查找或创建单个快递公司
+      description: 查找或创建单个快递公司...
       parameters:
         - in: body
           name: body
           description: 模型参数
           required: true
           schema:
-            $ref: '#/definitions/Pay'
+            $ref: '#/definitions/Express'
       responses:
         '200':
           description: 创建成功
           schema:
-            $ref: '#/definitions/Pay'
+            $ref: '#/definitions/Express'
 definitions:
-  Order:
+  Addr:
     type: object
     x-isModel: true
-    x-plural: Orders
-    x-tableName: order
-    description: 订单
+    x-plural: Addrs
+    x-tableName: addr
+    description: 收件地址
     required:
       - id
-      - order_no
-      - order_type
-      - order_status
-      - all_fee
-      - need_fee
-      - real_fee
+      - user_id
+      - name
     properties:
       id:
         type: string
         format: uuid
         description: ID
         uniqueItems: true
-      order_no:
-        type: string
-        format: string(64)
-        description: 订单号
-        x-message: 请输入
-        x-showTable: true
-        uniqueItems: true
-      order_type:
-        type: integer
-        format: int4
-        enum:
-          - 0
-          - 1
-        default: 0
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-        x-enumMap:
-          '0': 默认
-          '1': 其他
-        x-description: 订单类型
-        description: |
-          "订单类型"
-            * 0 - 默认
-            * 1 - 其他
-      deliver_type:
-        type: integer
-        format: int4
-        enum:
-          - 1
-          - 2
-          - 3
-        default: 1
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-        x-enumMap:
-          '1': 默认
-          '2': 快递
-          '3': 自提
-        x-description: 送货类型
-        description: |
-          "送货类型"
-            * 1 - 默认
-            * 2 - 快递
-            * 3 - 自提
       user_id:
         type: string
         format: uuid
         description: 用户ID
         x-message: 请输入
         x-showTable: true
-      crop_id:
+      name:
         type: string
-        format: uuid
-        description: 商家ID
+        format: string(64)
+        description: 姓名
         x-message: 请输入
         x-showTable: true
-      order_status:
-        type: integer
-        format: int4
-        enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-        default: 1
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-        x-enumMap:
-          '0': 已关闭
-          '1': 已创建
-          '2': 已支付
-          '3': 已确认
-          '4': 已发货
-          '5': 已完成
-          '6': 已评价
-          '7': 已取消
-        x-description: 订单状态
-        description: |
-          "订单状态"
-            * 0 - 已关闭
-            * 1 - 已创建
-            * 2 - 已支付
-            * 3 - 已确认
-            * 4 - 已发货
-            * 5 - 已完成
-            * 6 - 已评价
-            * 7 - 已取消
-      pay_status:
-        type: integer
-        format: int4
-        enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-        default: 1
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-        x-enumMap:
-          '0': 已关闭
-          '1': 已下单，待支付
-          '2': 已支付定金
-          '3': 已支付全款
-          '4': 申请退款，待确认
-          '5': 已确认，待退款
-          '6': 已退款，待收款
-          '7': 已收款，退款完成
-        x-description: 支付状态
-        description: |
-          "支付状态"
-            * 0 - 已关闭
-            * 1 - 已下单，待支付
-            * 2 - 已支付定金
-            * 3 - 已支付全款
-            * 4 - 申请退款，待确认
-            * 5 - 已确认，待退款
-            * 6 - 已退款，待收款
-            * 7 - 已收款，退款完成
-      bag_status:
-        type: integer
-        format: int4
-        enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-          - 8
-        default: 1
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-        x-enumMap:
-          '0': 已关闭
-          '1': 已确认，待出库
-          '2': 已出库，待发货
-          '3': 已发货，待收货
-          '4': 已收货，完成
-          '5': 申请退货，待确认
-          '6': 已确认，待发货
-          '7': 已发货，待验货
-          '8': 已验货，退货完成
-        x-description: 货物状态
-        description: |
-          "货物状态"
-            * 0 - 已关闭
-            * 1 - 已确认，待出库
-            * 2 - 已出库，待发货
-            * 3 - 已发货，待收货
-            * 4 - 已收货，完成
-            * 5 - 申请退货，待确认
-            * 6 - 已确认，待发货
-            * 7 - 已发货，待验货
-            * 8 - 已验货，退货完成
-      all_fee:
-        type: integer
-        format: int32
-        description: 总金额
-        x-message: 请输入
-        x-showTable: true
-        x-showSorter: true
-      dis_fee:
-        type: integer
-        format: int32
-        description: 折扣金额
-        default: 0
-        x-message: 请输入
-      exp_fee:
-        type: integer
-        format: int32
-        description: 运费金额
-        x-message: 请输入
-      need_fee:
-        type: integer
-        format: int32
-        description: 实际需付金额
-        x-message: 请输入
-        x-showTable: true
-        x-showSorter: true
-      real_fee:
-        type: integer
-        format: int32
-        description: 已付金额
-        default: 0
-        x-message: 请输入
-        x-showTable: true
-        x-showSorter: true
-      pay_time:
+      phone:
         type: string
-        format: date-time
-        description: 付清全款时间
+        format: string(64)
+        description: 电话
         x-message: 请输入
-      sku_info:
-        type: array
-        format: array
-        description: 单品信息快照
-        x-message: 请输入
-        items:
-          $ref: '#/definitions/SkuDemo'
-      deliver_info:
-        type: object
-        format: object
-        description: 快递信息快照
-        x-message: 请输入
-      remark:
+        x-showTable: true
+      country:
         type: string
-        format: text
-        description: 备注
+        format: string(64)
+        description: 国家
+        x-message: 请输入
+        x-showTable: true
+      province:
+        type: string
+        format: string(64)
+        description: 省份
+        x-message: 请输入
+        x-showTable: true
+      city:
+        type: string
+        format: string(64)
+        description: 城市
+        x-message: 请输入
+        x-showTable: true
+      region:
+        type: string
+        format: string(64)
+        description: 区（县）
+        x-message: 请输入
+        x-showTable: true
+      address:
+        type: string
+        format: string(255)
+        description: 详细地址
+        x-message: 请输入
+        x-showTable: true
+      region_code:
+        type: string
+        format: string(8)
+        description: 地区编码
+        x-message: 请输入
+        x-showTable: true
+      longitude:
+        type: number
+        format: float
+        description: 经度
+        x-message: 请输入
+      latitude:
+        type: number
+        format: float
+        description: 维度
         x-message: 请输入
     example:
-      id: '123456'
-      order_no: '20121212121212'
-      order_type: 0
-      order_status: 1
-      all_fee: 1
-      need_fee: 1
-      real_fee: 0
-  OrderSku:
+      id: '123'
+      user_id: '456'
+      name: testname
+  Waybill:
     type: object
     x-isModel: true
-    x-plural: OrderSkus
-    x-tableName: ordersku
-    description: 订单
+    x-plural: Waybills
+    x-tableName: waybill
+    description: 快递单
     required:
       - id
       - order_no
-      - sku_id
-      - quantity
+      - to_id
+      - express_id
     properties:
       id:
         type: string
         format: uuid
         description: ID
         uniqueItems: true
-      order_no:
+      waybill_no:
         type: string
         format: string(64)
-        description: 订单号
-        x-message: 请输入
-        x-showTable: true
-      sku_id:
-        type: string
-        format: uuid
-        description: SKU ID
-        x-message: 请输入
-        x-showTable: true
-      quantity:
-        type: integer
-        format: int32
-        description: 数量
-        x-message: 请输入
-        x-showTable: true
-        x-showSorter: true
-      sku_name:
-        type: string
-        format: string(64)
-        description: 单品名称
-        x-message: 请输入
-        x-showTable: true
-      sku_price:
-        type: integer
-        format: int32
-        description: 单价
-        x-message: 请输入
-        x-showTable: true
-        x-showSorter: true
-      sku_unit:
-        type: string
-        format: string(16)
-        description: 单位
-        x-message: 请输入
-        x-showTable: true
-      extra_info:
-        type: object
-        format: object
-        description: 额外信息
-        x-message: 请输入
-      remark:
-        type: string
-        format: text
-        description: 备注
-        x-message: 请输入
-    example:
-      id: '123456'
-      order_no: '20121212121212'
-      sku_id: '123456'
-      quantity: 1
-  Pay:
-    type: object
-    x-isModel: true
-    x-plural: Pays
-    x-tableName: pays
-    description: 支付单
-    required:
-      - id
-      - pay_no
-      - order_no
-      - pay_type
-      - pay_fee
-      - pay_result
-      - is_locked
-    properties:
-      id:
-        type: string
-        format: uuid
-        description: ID
-        uniqueItems: true
-      pay_no:
-        type: string
-        format: string(64)
-        description: 支付单号
+        description: 快递单号
         x-message: 请输入
         x-showTable: true
       order_no:
@@ -901,88 +660,105 @@ definitions:
         description: 订单号
         x-message: 请输入
         x-showTable: true
-      pay_type:
-        type: integer
-        format: int4
-        enum:
-          - 0
-          - 1
-          - 2
-          - 3
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-        x-enumMap:
-          '0': 余额
-          '1': 卡券
-          '2': 微信支付
-          '3': 支付宝
-        x-description: 支付方式
-        description: |
-          "支付方式"
-            * 0 - 余额
-            * 1 - 卡券
-            * 2 - 微信支付
-            * 3 - 支付宝
-      pay_fee:
-        type: integer
-        format: int32
-        description: 支付金额
+      express_id:
+        type: string
+        format: uuid
+        description: 快递公司ID
         x-message: 请输入
         x-showTable: true
-        x-showSorter: true
-      pay_result:
-        type: integer
-        format: int4
-        enum:
-          - 0
-          - 1
-          - 2
-          - 3
-        default: 1
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-        x-enumMap:
-          '0': 已关闭
-          '1': 待支付
-          '2': 支付成功
-          '3': 支付失败
-        x-description: 支付结果
-        description: |
-          "支付结果"
-            * 0 - 已关闭
-            * 1 - 待支付
-            * 2 - 支付成功
-            * 3 - 支付失败
-      pay_time:
+      staff_id:
         type: string
-        format: date-time
-        description: 支付时间
-        x-message: 请选择
+        format: uuid
+        description: 操作人ID
+        x-message: 请输入
         x-showTable: true
-        x-showSorter: true
-      is_locked:
-        type: boolean
-        format: boolean
-        description: 是否锁定
-        default: false
-        x-message: 请选择
-        x-showTable: true
-        x-showFilter: true
-      remark:
+      from_id:
         type: string
-        format: text
-        description: 备注
+        format: uuid
+        description: 寄件地址ID
+        x-message: 请输入
+      from_name:
+        type: string
+        format: string(64)
+        description: 寄件人姓名
+        x-message: 请输入
+      from_phone:
+        type: string
+        format: string(64)
+        description: 寄件人电话
+        x-message: 请输入
+      from_addr:
+        type: string
+        format: string(255)
+        description: 寄件人地址
+        x-message: 请输入
+      from_code:
+        type: string
+        format: string(8)
+        description: 寄件人地区码
+        x-message: 请输入
+      to_id:
+        type: string
+        format: uuid
+        description: 收件地址ID
+        x-message: 请输入
+      to_name:
+        type: string
+        format: string(64)
+        description: 收件人姓名
+        x-message: 请输入
+        x-showTable: true
+      to_phone:
+        type: string
+        format: string(64)
+        description: 收件人电话
+        x-message: 请输入
+        x-showTable: true
+      to_addr:
+        type: string
+        format: string(255)
+        description: 收件人地址
+        x-message: 请输入
+        x-showTable: true
+      to_code:
+        type: string
+        format: string(8)
+        description: 收件人地区码
         x-message: 请输入
     example:
       id: '123456'
-      pay_no: '20121212121212'
       order_no: '20121212121212'
-      pay_type: 1
-      pay_fee: 1
-      pay_result: 1
-      is_locked: false
+      to_id: '123456'
+  Express:
+    type: object
+    x-isModel: true
+    x-plural: Expresses
+    x-tableName: express
+    description: 快递公司
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      name:
+        type: string
+        format: string(64)
+        description: 公司名称
+        x-message: 请输入
+        x-showTable: true
+      corp_id:
+        type: string
+        format: uuid
+        description: 公司ID
+        x-message: 请输入
+    example:
+      id: '123456'
+      name: 的士速递
+      corp_id: '456'
   UserDemo:
     type: object
     description: 用户模型
@@ -1067,22 +843,6 @@ definitions:
         type: integer
       errmsg:
         type: string
-  SkuDemo:
-    type: object
-    description: 单品
-    required:
-      - id
-      - name
-    properties:
-      id:
-        type: integer
-        description: ID
-      name:
-        type: string
-        description: 单品名
-    example:
-      id: '123'
-      name: 测试商品
 responses:
   NotFound:
     description: The specified resource was not found
