@@ -1,0 +1,1581 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Hello World App
+host: 'localhost:3000'
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: X-API-Key
+  JWT:
+    description: 'Authorization: Bearer {token}'
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - APIKeyHeader: []
+    JWT: []
+paths:
+  /account/login:
+    post:
+      summary: 登录
+      description: 登录...
+      security: []
+      parameters:
+        - in: body
+          name: body
+          description: 登录参数
+          required: true
+          schema:
+            $ref: '#/definitions/LoginBody'
+      responses:
+        '200':
+          description: 登录成功
+          schema:
+            $ref: '#/definitions/LoginResponse'
+  /account/user:
+    get:
+      summary: 查询当前用户
+      description: 查询当前用户..
+      responses:
+        '200':
+          description: 查询成功
+          headers:
+            authtoken:
+              type: string
+              description: 新token续期
+          schema:
+            $ref: '#/definitions/UserDemo'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          $ref: '#/responses/NotFound'
+  /staffs:
+    post:
+      summary: 创建单个员工
+      description: 创建单个员工...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Staff'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个员工
+      description: 查询多个员工...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Staff'
+    patch:
+      summary: 更新多个员工
+      description: 更新多个员工...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Staff'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个员工
+      description: 删除多个员工...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/staffs/{id}':
+    get:
+      summary: 查询单个员工
+      description: 查询单个员工..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Staff'
+    patch:
+      summary: 修改单个员工
+      description: 修改单个员工..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Staff'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个员工
+      description: 删除单个员工..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /staffs/multiple:
+    post:
+      summary: 创建多个员工
+      description: 创建多个员工...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Staff'
+      responses:
+        '200':
+          description: 创建成功
+  /staff:
+    get:
+      summary: 查询单个员工
+      description: 查询单个员工...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Staff'
+    post:
+      summary: 查找或创建单个员工
+      description: 查找或创建单个员工...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Staff'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Staff'
+  /orgs:
+    post:
+      summary: 创建单个组织机构
+      description: 创建单个组织机构...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Org'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个组织机构
+      description: 查询多个组织机构...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Org'
+    patch:
+      summary: 更新多个组织机构
+      description: 更新多个组织机构...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Org'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个组织机构
+      description: 删除多个组织机构...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/orgs/{id}':
+    get:
+      summary: 查询单个组织机构
+      description: 查询单个组织机构..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Org'
+    patch:
+      summary: 修改单个组织机构
+      description: 修改单个组织机构..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Org'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个组织机构
+      description: 删除单个组织机构..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /orgs/multiple:
+    post:
+      summary: 创建多个组织机构
+      description: 创建多个组织机构...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Org'
+      responses:
+        '200':
+          description: 创建成功
+  /org:
+    get:
+      summary: 查询单个组织机构
+      description: 查询单个组织机构...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Org'
+    post:
+      summary: 查找或创建单个组织机构
+      description: 查找或创建单个组织机构...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Org'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Org'
+  /stafforgs:
+    post:
+      summary: 创建单个员工-部门
+      description: 创建单个员工-部门...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/StaffOrg'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个员工-部门
+      description: 查询多个员工-部门...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/StaffOrg'
+    patch:
+      summary: 更新多个员工-部门
+      description: 更新多个员工-部门...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/StaffOrg'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个员工-部门
+      description: 删除多个员工-部门...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/stafforgs/{id}':
+    get:
+      summary: 查询单个员工-部门
+      description: 查询单个员工-部门..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/StaffOrg'
+    patch:
+      summary: 修改单个员工-部门
+      description: 修改单个员工-部门..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/StaffOrg'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个员工-部门
+      description: 删除单个员工-部门..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /stafforgs/multiple:
+    post:
+      summary: 创建多个员工-部门
+      description: 创建多个员工-部门...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/StaffOrg'
+      responses:
+        '200':
+          description: 创建成功
+  /stafforg:
+    get:
+      summary: 查询单个员工-部门
+      description: 查询单个员工-部门...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/StaffOrg'
+    post:
+      summary: 查找或创建单个员工-部门
+      description: 查找或创建单个员工-部门...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/StaffOrg'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/StaffOrg'
+  /resources:
+    post:
+      summary: 创建单个资源
+      description: 创建单个资源...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Resource'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个资源
+      description: 查询多个资源...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Resource'
+    patch:
+      summary: 更新多个资源
+      description: 更新多个资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Resource'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个资源
+      description: 删除多个资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/resources/{id}':
+    get:
+      summary: 查询单个资源
+      description: 查询单个资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Resource'
+    patch:
+      summary: 修改单个资源
+      description: 修改单个资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Resource'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个资源
+      description: 删除单个资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /resources/multiple:
+    post:
+      summary: 创建多个资源
+      description: 创建多个资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Resource'
+      responses:
+        '200':
+          description: 创建成功
+  /resource:
+    get:
+      summary: 查询单个资源
+      description: 查询单个资源...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Resource'
+    post:
+      summary: 查找或创建单个资源
+      description: 查找或创建单个资源...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Resource'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Resource'
+  /roles:
+    post:
+      summary: 创建单个资源
+      description: 创建单个资源...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Role'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个资源
+      description: 查询多个资源...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Role'
+    patch:
+      summary: 更新多个资源
+      description: 更新多个资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Role'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个资源
+      description: 删除多个资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/roles/{id}':
+    get:
+      summary: 查询单个资源
+      description: 查询单个资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Role'
+    patch:
+      summary: 修改单个资源
+      description: 修改单个资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Role'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个资源
+      description: 删除单个资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /roles/multiple:
+    post:
+      summary: 创建多个资源
+      description: 创建多个资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Role'
+      responses:
+        '200':
+          description: 创建成功
+  /role:
+    get:
+      summary: 查询单个资源
+      description: 查询单个资源...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Role'
+    post:
+      summary: 查找或创建单个资源
+      description: 查找或创建单个资源...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Role'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Role'
+  /roleresources:
+    post:
+      summary: 创建单个角色-资源
+      description: 创建单个角色-资源...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/RoleResource'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个角色-资源
+      description: 查询多个角色-资源...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/RoleResource'
+    patch:
+      summary: 更新多个角色-资源
+      description: 更新多个角色-资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RoleResource'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个角色-资源
+      description: 删除多个角色-资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/roleresources/{id}':
+    get:
+      summary: 查询单个角色-资源
+      description: 查询单个角色-资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/RoleResource'
+    patch:
+      summary: 修改单个角色-资源
+      description: 修改单个角色-资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/RoleResource'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个角色-资源
+      description: 删除单个角色-资源..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /roleresources/multiple:
+    post:
+      summary: 创建多个角色-资源
+      description: 创建多个角色-资源...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RoleResource'
+      responses:
+        '200':
+          description: 创建成功
+  /roleresource:
+    get:
+      summary: 查询单个角色-资源
+      description: 查询单个角色-资源...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/RoleResource'
+    post:
+      summary: 查找或创建单个角色-资源
+      description: 查找或创建单个角色-资源...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/RoleResource'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/RoleResource'
+  /staffroles:
+    post:
+      summary: 创建单个员工-角色
+      description: 创建单个员工-角色...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/StaffRole'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个员工-角色
+      description: 查询多个员工-角色...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/StaffRole'
+    patch:
+      summary: 更新多个员工-角色
+      description: 更新多个员工-角色...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/StaffRole'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个员工-角色
+      description: 删除多个员工-角色...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/staffroles/{id}':
+    get:
+      summary: 查询单个员工-角色
+      description: 查询单个员工-角色..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/StaffRole'
+    patch:
+      summary: 修改单个员工-角色
+      description: 修改单个员工-角色..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/StaffRole'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个员工-角色
+      description: 删除单个员工-角色..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /staffroles/multiple:
+    post:
+      summary: 创建多个员工-角色
+      description: 创建多个员工-角色...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/StaffRole'
+      responses:
+        '200':
+          description: 创建成功
+  /staffrole:
+    get:
+      summary: 查询单个员工-角色
+      description: 查询单个员工-角色...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/StaffRole'
+    post:
+      summary: 查找或创建单个员工-角色
+      description: 查找或创建单个员工-角色...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/StaffRole'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/StaffRole'
+definitions:
+  Staff:
+    type: object
+    x-isModel: true
+    x-plural: Staffs
+    x-tableName: staff
+    description: 员工
+    required:
+      - id
+      - staff_code
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      user_id:
+        type: string
+        format: uuid
+        description: 用户ID
+        x-message: 请输入
+        x-showTable: true
+      staff_code:
+        type: string
+        format: string(64)
+        description: 员工代码
+        x-message: 请输入
+        x-showTable: true
+      name:
+        type: string
+        format: string(64)
+        description: 企业名称
+        x-message: 请输入
+        x-showTable: true
+      corp_code:
+        type: string
+        format: string(64)
+        description: 企业代码
+        x-message: 请输入
+        x-showTable: true
+      phone:
+        type: string
+        format: string(64)
+        description: 电话
+        x-message: 请输入
+        x-showTable: true
+      email:
+        type: string
+        format: email
+        description: 邮箱
+        x-message: 请输入
+        x-showTable: true
+      fox:
+        type: string
+        format: string(64)
+        description: 传真
+        x-message: 请输入
+        x-showTable: true
+    example:
+      id: '123'
+      staff_code: '1234'
+      name: foo
+  Org:
+    type: object
+    x-isModel: true
+    x-plural: Orgs
+    x-tableName: org
+    description: 组织机构
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      pid:
+        type: string
+        format: uuid
+        description: 父ID
+        x-message: 请输入
+      corp_code:
+        type: string
+        format: string(64)
+        description: 企业代码
+        x-message: 请输入
+        x-showTable: true
+      name:
+        type: string
+        format: string(64)
+        description: 姓名
+        x-message: 请输入
+        x-showTable: true
+    example:
+      id: '123'
+      name: testname
+  StaffOrg:
+    type: object
+    x-isModel: true
+    x-plural: StaffOrgs
+    x-tableName: stafforg
+    description: 员工-部门
+    required:
+      - id
+      - staff_id
+      - org_id
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      staff_id:
+        type: string
+        format: uuid
+        description: 员工ID
+        x-message: 请输入
+      org_id:
+        type: string
+        format: uuid
+        description: 部门ID
+        x-message: 请输入
+    example:
+      id: '123'
+      staff_id: '456'
+      org_id: '789'
+  Resource:
+    type: object
+    x-isModel: true
+    x-plural: Resources
+    x-tableName: resource
+    description: 资源
+    required:
+      - id
+      - resource_code
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      pid:
+        type: string
+        format: uuid
+        description: 父ID
+        x-message: 请输入
+      resource_code:
+        type: string
+        format: string(64)
+        description: 资源代码
+        x-message: 请输入
+        x-showTable: true
+        uniqueItems: true
+      name:
+        type: string
+        format: string(64)
+        description: 资源名称
+        x-message: 请输入
+        x-showTable: true
+    example:
+      id: '123'
+      name: testname
+  Role:
+    type: object
+    x-isModel: true
+    x-plural: Roles
+    x-tableName: role
+    description: 资源
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      name:
+        type: string
+        format: string(64)
+        description: 角色名称
+        x-message: 请输入
+        x-showTable: true
+    example:
+      id: '123'
+      name: testname
+  RoleResource:
+    type: object
+    x-isModel: true
+    x-plural: RoleResources
+    x-tableName: roleresource
+    description: 角色-资源
+    required:
+      - id
+      - role_id
+      - resource_id
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      role_id:
+        type: string
+        format: uuid
+        description: 角色ID
+        x-message: 请输入
+        x-showTable: true
+      resource_id:
+        type: string
+        format: uuid
+        description: 资源ID
+        x-message: 请输入
+        x-showTable: true
+      action:
+        type: integer
+        format: int4
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+        default: 0
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '0': ALL
+          '1': 增
+          '2': 删
+          '3': 改
+          '4': 查
+        x-description: 操作
+        description: |
+          "操作"
+            * 0 - ALL
+            * 1 - 增
+            * 2 - 删
+            * 3 - 改
+            * 4 - 查
+    example:
+      id: '123'
+      name: testname
+  StaffRole:
+    type: object
+    x-isModel: true
+    x-plural: StaffRoles
+    x-tableName: staffrole
+    description: 员工-角色
+    required:
+      - id
+      - staff_id
+      - role_id
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      staff_id:
+        type: string
+        format: uuid
+        description: 员工ID
+        x-message: 请输入
+        x-showTable: true
+      role_id:
+        type: string
+        format: uuid
+        description: 角色ID
+        x-message: 请输入
+        x-showTable: true
+    example:
+      id: '123'
+      staff_id: '123'
+      role_id: '123'
+  UserDemo:
+    type: object
+    description: 用户模型
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        description: ID
+      name:
+        type: string
+        description: 用户名
+      avatar:
+        type: string
+        description: 头像
+      email:
+        type: string
+        description: 邮箱
+    example:
+      name: Admin
+      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
+      id: '00000001'
+      email: test@test.com
+  LoginBody:
+    type: object
+    description: 登录参数模型
+    required:
+      - userName
+      - password
+      - type
+    properties:
+      userName:
+        type: string
+        description: 用户名
+      password:
+        type: string
+        description: 密码
+      type:
+        type: string
+        description: 账户类型
+    example:
+      userName: admin
+      password: '123456'
+      type: username
+  LoginResponse:
+    type: object
+    description: 登录返回数据模型
+    required:
+      - status
+      - type
+      - currentAuthority
+      - authtoken
+    properties:
+      status:
+        type: string
+        description: 登录状态
+      type:
+        type: string
+        description: 账号类型
+      currentAuthority:
+        type: string
+        description: 当前角色
+      authtoken:
+        type: string
+        description: 秘钥
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem'
+    required:
+      - message
+  ErrorItem:
+    type: object
+    properties:
+      errcode:
+        type: integer
+      errmsg:
+        type: string
+responses:
+  NotFound:
+    description: The specified resource was not found
+    schema:
+      $ref: '#/definitions/Error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error'
