@@ -1,0 +1,2890 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Hello World App
+host: 'localhost:3000'
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: X-API-Key
+  JWT:
+    description: 'Authorization: Bearer {token}'
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - APIKeyHeader: []
+    JWT: []
+paths:
+  /account/login:
+    post:
+      summary: 登录
+      description: 登录...
+      security: []
+      parameters:
+        - in: body
+          name: body
+          description: 登录参数
+          required: true
+          schema:
+            $ref: '#/definitions/LoginBody'
+      responses:
+        '200':
+          description: 登录成功
+          schema:
+            $ref: '#/definitions/LoginResponse'
+  /account/user:
+    get:
+      summary: 查询当前用户
+      description: 查询当前用户..
+      responses:
+        '200':
+          description: 查询成功
+          headers:
+            authtoken:
+              type: string
+              description: 新token续期
+          schema:
+            $ref: '#/definitions/UserDemo'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          $ref: '#/responses/NotFound'
+  /categories:
+    post:
+      summary: 创建单个商品分类
+      description: 创建单个商品分类...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个商品分类
+      description: 查询多个商品分类...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Category'
+    patch:
+      summary: 更新多个商品分类
+      description: 更新多个商品分类...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个商品分类
+      description: 删除多个商品分类...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/categories/{id}':
+    get:
+      summary: 查询单个商品分类
+      description: 查询单个商品分类..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Category'
+    patch:
+      summary: 修改单个商品分类
+      description: 修改单个商品分类..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个商品分类
+      description: 删除单个商品分类..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /categories/multiple:
+    post:
+      summary: 创建多个商品分类
+      description: 创建多个商品分类...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: 创建成功
+  /category:
+    get:
+      summary: 查询单个商品分类
+      description: 查询单个商品分类...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Category'
+    post:
+      summary: 查找或创建单个商品分类
+      description: 查找或创建单个商品分类...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Category'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Category'
+  /brands:
+    post:
+      summary: 创建单个品牌
+      description: 创建单个品牌...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Brand'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个品牌
+      description: 查询多个品牌...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Brand'
+    patch:
+      summary: 更新多个品牌
+      description: 更新多个品牌...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Brand'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个品牌
+      description: 删除多个品牌...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/brands/{id}':
+    get:
+      summary: 查询单个品牌
+      description: 查询单个品牌..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Brand'
+    patch:
+      summary: 修改单个品牌
+      description: 修改单个品牌..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Brand'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个品牌
+      description: 删除单个品牌..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /brands/multiple:
+    post:
+      summary: 创建多个品牌
+      description: 创建多个品牌...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Brand'
+      responses:
+        '200':
+          description: 创建成功
+  /brand:
+    get:
+      summary: 查询单个品牌
+      description: 查询单个品牌...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Brand'
+    post:
+      summary: 查找或创建单个品牌
+      description: 查找或创建单个品牌...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Brand'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Brand'
+  /products:
+    post:
+      summary: 创建单个商品(SPU)
+      description: 创建单个商品(SPU)...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个商品(SPU)
+      description: 查询多个商品(SPU)...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Product'
+    patch:
+      summary: 更新多个商品(SPU)
+      description: 更新多个商品(SPU)...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个商品(SPU)
+      description: 删除多个商品(SPU)...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/products/{id}':
+    get:
+      summary: 查询单个商品(SPU)
+      description: 查询单个商品(SPU)..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Product'
+    patch:
+      summary: 修改单个商品(SPU)
+      description: 修改单个商品(SPU)..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个商品(SPU)
+      description: 删除单个商品(SPU)..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /products/multiple:
+    post:
+      summary: 创建多个商品(SPU)
+      description: 创建多个商品(SPU)...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: 创建成功
+  /product:
+    get:
+      summary: 查询单个商品(SPU)
+      description: 查询单个商品(SPU)...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Product'
+    post:
+      summary: 查找或创建单个商品(SPU)
+      description: 查找或创建单个商品(SPU)...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Product'
+  /skus:
+    post:
+      summary: 创建单个单品
+      description: 创建单个单品...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Sku'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个单品
+      description: 查询多个单品...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Sku'
+    patch:
+      summary: 更新多个单品
+      description: 更新多个单品...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Sku'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个单品
+      description: 删除多个单品...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/skus/{id}':
+    get:
+      summary: 查询单个单品
+      description: 查询单个单品..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Sku'
+    patch:
+      summary: 修改单个单品
+      description: 修改单个单品..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Sku'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个单品
+      description: 删除单个单品..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /skus/multiple:
+    post:
+      summary: 创建多个单品
+      description: 创建多个单品...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Sku'
+      responses:
+        '200':
+          description: 创建成功
+  /sku:
+    get:
+      summary: 查询单个单品
+      description: 查询单个单品...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Sku'
+    post:
+      summary: 查找或创建单个单品
+      description: 查找或创建单个单品...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Sku'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Sku'
+  /propertys:
+    post:
+      summary: 创建单个属性名
+      description: 创建单个属性名...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Property'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个属性名
+      description: 查询多个属性名...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Property'
+    patch:
+      summary: 更新多个属性名
+      description: 更新多个属性名...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Property'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个属性名
+      description: 删除多个属性名...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/propertys/{id}':
+    get:
+      summary: 查询单个属性名
+      description: 查询单个属性名..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Property'
+    patch:
+      summary: 修改单个属性名
+      description: 修改单个属性名..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Property'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个属性名
+      description: 删除单个属性名..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /propertys/multiple:
+    post:
+      summary: 创建多个属性名
+      description: 创建多个属性名...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Property'
+      responses:
+        '200':
+          description: 创建成功
+  /property:
+    get:
+      summary: 查询单个属性名
+      description: 查询单个属性名...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Property'
+    post:
+      summary: 查找或创建单个属性名
+      description: 查找或创建单个属性名...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Property'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Property'
+  /propertygroups:
+    post:
+      summary: 创建单个属性组名
+      description: 创建单个属性组名...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/PropertyGroup'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个属性组名
+      description: 查询多个属性组名...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/PropertyGroup'
+    patch:
+      summary: 更新多个属性组名
+      description: 更新多个属性组名...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PropertyGroup'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个属性组名
+      description: 删除多个属性组名...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/propertygroups/{id}':
+    get:
+      summary: 查询单个属性组名
+      description: 查询单个属性组名..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/PropertyGroup'
+    patch:
+      summary: 修改单个属性组名
+      description: 修改单个属性组名..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/PropertyGroup'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个属性组名
+      description: 删除单个属性组名..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /propertygroups/multiple:
+    post:
+      summary: 创建多个属性组名
+      description: 创建多个属性组名...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PropertyGroup'
+      responses:
+        '200':
+          description: 创建成功
+  /propertygroup:
+    get:
+      summary: 查询单个属性组名
+      description: 查询单个属性组名...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/PropertyGroup'
+    post:
+      summary: 查找或创建单个属性组名
+      description: 查找或创建单个属性组名...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/PropertyGroup'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/PropertyGroup'
+  /categorypropertys:
+    post:
+      summary: 创建单个某分类的商品属性
+      description: 创建单个某分类的商品属性...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/CategoryProperty'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个某分类的商品属性
+      description: 查询多个某分类的商品属性...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/CategoryProperty'
+    patch:
+      summary: 更新多个某分类的商品属性
+      description: 更新多个某分类的商品属性...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CategoryProperty'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个某分类的商品属性
+      description: 删除多个某分类的商品属性...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/categorypropertys/{id}':
+    get:
+      summary: 查询单个某分类的商品属性
+      description: 查询单个某分类的商品属性..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/CategoryProperty'
+    patch:
+      summary: 修改单个某分类的商品属性
+      description: 修改单个某分类的商品属性..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/CategoryProperty'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个某分类的商品属性
+      description: 删除单个某分类的商品属性..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /categorypropertys/multiple:
+    post:
+      summary: 创建多个某分类的商品属性
+      description: 创建多个某分类的商品属性...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CategoryProperty'
+      responses:
+        '200':
+          description: 创建成功
+  /categoryproperty:
+    get:
+      summary: 查询单个某分类的商品属性
+      description: 查询单个某分类的商品属性...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/CategoryProperty'
+    post:
+      summary: 查找或创建单个某分类的商品属性
+      description: 查找或创建单个某分类的商品属性...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/CategoryProperty'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/CategoryProperty'
+  /productpropertys:
+    post:
+      summary: 创建单个某商品的单品属性
+      description: 创建单个某商品的单品属性...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductProperty'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个某商品的单品属性
+      description: 查询多个某商品的单品属性...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/ProductProperty'
+    patch:
+      summary: 更新多个某商品的单品属性
+      description: 更新多个某商品的单品属性...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductProperty'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个某商品的单品属性
+      description: 删除多个某商品的单品属性...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/productpropertys/{id}':
+    get:
+      summary: 查询单个某商品的单品属性
+      description: 查询单个某商品的单品属性..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/ProductProperty'
+    patch:
+      summary: 修改单个某商品的单品属性
+      description: 修改单个某商品的单品属性..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductProperty'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个某商品的单品属性
+      description: 删除单个某商品的单品属性..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /productpropertys/multiple:
+    post:
+      summary: 创建多个某商品的单品属性
+      description: 创建多个某商品的单品属性...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductProperty'
+      responses:
+        '200':
+          description: 创建成功
+  /productproperty:
+    get:
+      summary: 查询单个某商品的单品属性
+      description: 查询单个某商品的单品属性...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/ProductProperty'
+    post:
+      summary: 查找或创建单个某商品的单品属性
+      description: 查找或创建单个某商品的单品属性...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductProperty'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/ProductProperty'
+  /productpropertyvalues:
+    post:
+      summary: 创建单个商品属性值
+      description: 创建单个商品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductPropertyValue'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个商品属性值
+      description: 查询多个商品属性值...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/ProductPropertyValue'
+    patch:
+      summary: 更新多个商品属性值
+      description: 更新多个商品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductPropertyValue'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个商品属性值
+      description: 删除多个商品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/productpropertyvalues/{id}':
+    get:
+      summary: 查询单个商品属性值
+      description: 查询单个商品属性值..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/ProductPropertyValue'
+    patch:
+      summary: 修改单个商品属性值
+      description: 修改单个商品属性值..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductPropertyValue'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个商品属性值
+      description: 删除单个商品属性值..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /productpropertyvalues/multiple:
+    post:
+      summary: 创建多个商品属性值
+      description: 创建多个商品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductPropertyValue'
+      responses:
+        '200':
+          description: 创建成功
+  /productpropertyvalue:
+    get:
+      summary: 查询单个商品属性值
+      description: 查询单个商品属性值...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/ProductPropertyValue'
+    post:
+      summary: 查找或创建单个商品属性值
+      description: 查找或创建单个商品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductPropertyValue'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/ProductPropertyValue'
+  /skupropertyvalues:
+    post:
+      summary: 创建单个单品属性值
+      description: 创建单个单品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/SkuPropertyValue'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个单品属性值
+      description: 查询多个单品属性值...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/SkuPropertyValue'
+    patch:
+      summary: 更新多个单品属性值
+      description: 更新多个单品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SkuPropertyValue'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个单品属性值
+      description: 删除多个单品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/skupropertyvalues/{id}':
+    get:
+      summary: 查询单个单品属性值
+      description: 查询单个单品属性值..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/SkuPropertyValue'
+    patch:
+      summary: 修改单个单品属性值
+      description: 修改单个单品属性值..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/SkuPropertyValue'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个单品属性值
+      description: 删除单个单品属性值..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /skupropertyvalues/multiple:
+    post:
+      summary: 创建多个单品属性值
+      description: 创建多个单品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SkuPropertyValue'
+      responses:
+        '200':
+          description: 创建成功
+  /skupropertyvalue:
+    get:
+      summary: 查询单个单品属性值
+      description: 查询单个单品属性值...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/SkuPropertyValue'
+    post:
+      summary: 查找或创建单个单品属性值
+      description: 查找或创建单个单品属性值...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/SkuPropertyValue'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/SkuPropertyValue'
+  /labelgroups:
+    post:
+      summary: 创建单个某分类的标签组
+      description: 创建单个某分类的标签组...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/LabelGroup'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个某分类的标签组
+      description: 查询多个某分类的标签组...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/LabelGroup'
+    patch:
+      summary: 更新多个某分类的标签组
+      description: 更新多个某分类的标签组...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LabelGroup'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个某分类的标签组
+      description: 删除多个某分类的标签组...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/labelgroups/{id}':
+    get:
+      summary: 查询单个某分类的标签组
+      description: 查询单个某分类的标签组..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/LabelGroup'
+    patch:
+      summary: 修改单个某分类的标签组
+      description: 修改单个某分类的标签组..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/LabelGroup'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个某分类的标签组
+      description: 删除单个某分类的标签组..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /labelgroups/multiple:
+    post:
+      summary: 创建多个某分类的标签组
+      description: 创建多个某分类的标签组...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LabelGroup'
+      responses:
+        '200':
+          description: 创建成功
+  /labelgroup:
+    get:
+      summary: 查询单个某分类的标签组
+      description: 查询单个某分类的标签组...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/LabelGroup'
+    post:
+      summary: 查找或创建单个某分类的标签组
+      description: 查找或创建单个某分类的标签组...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/LabelGroup'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/LabelGroup'
+  /productlabels:
+    post:
+      summary: 创建单个商品标签
+      description: 创建单个商品标签...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductLable'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个商品标签
+      description: 查询多个商品标签...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/ProductLable'
+    patch:
+      summary: 更新多个商品标签
+      description: 更新多个商品标签...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductLable'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个商品标签
+      description: 删除多个商品标签...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/productlabels/{id}':
+    get:
+      summary: 查询单个商品标签
+      description: 查询单个商品标签..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/ProductLable'
+    patch:
+      summary: 修改单个商品标签
+      description: 修改单个商品标签..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductLable'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个商品标签
+      description: 删除单个商品标签..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /productlabels/multiple:
+    post:
+      summary: 创建多个商品标签
+      description: 创建多个商品标签...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductLable'
+      responses:
+        '200':
+          description: 创建成功
+  /productlable:
+    get:
+      summary: 查询单个商品标签
+      description: 查询单个商品标签...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/ProductLable'
+    post:
+      summary: 查找或创建单个商品标签
+      description: 查找或创建单个商品标签...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/ProductLable'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/ProductLable'
+definitions:
+  Category:
+    type: object
+    x-isModel: true
+    x-plural: Categories
+    x-tableName: category
+    description: 商品分类
+    required:
+      - id
+      - name
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      name:
+        type: string
+        format: string(64)
+        description: 分类名称
+        x-message: 请输入
+        x-showTable: true
+      pid:
+        type: string
+        format: uuid
+        description: 父ID
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+      description:
+        type: string
+        format: string(128)
+        description: 描述
+        x-message: 请输入
+    example:
+      id: '123'
+      name: foo
+      sort: 0
+  Brand:
+    type: object
+    x-isModel: true
+    x-plural: Brands
+    x-tableName: brand
+    description: 品牌
+    required:
+      - id
+      - name_cn
+      - corp_code
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      name_cn:
+        type: string
+        format: string(64)
+        description: 品牌中文名称
+        x-message: 请输入
+        x-showTable: true
+      name_en:
+        type: string
+        format: string(64)
+        description: 品牌英文名称
+        x-message: 请输入
+        x-showTable: true
+      corp_code:
+        type: string
+        format: string(64)
+        description: 企业代码
+        x-message: 请输入
+        x-showTable: true
+      logo:
+        type: string
+        format: string(255)
+        description: LOGO
+        x-message: 请输入
+      website:
+        type: string
+        format: string(255)
+        description: 官方网站
+        x-message: 请输入
+      description:
+        type: string
+        format: string(255)
+        description: 描述
+        x-message: 请输入
+    example:
+      id: '123'
+      name_cn: foo
+      corp_code: '456'
+  Product:
+    type: object
+    x-isModel: true
+    x-plural: Products
+    x-tableName: product
+    description: 商品(SPU)
+    required:
+      - id
+      - product_no
+      - name
+      - category_id
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      product_no:
+        type: string
+        format: string(64)
+        description: 商品代码
+        x-message: 请输入
+        x-showTable: true
+      name:
+        type: string
+        format: string(64)
+        description: 商品名称
+        x-message: 请输入
+        x-showTable: true
+      brand_id:
+        type: string
+        format: uuid
+        description: 品牌ID
+        x-message: 请输入
+        x-showTable: true
+      one_category_id:
+        type: string
+        format: uuid
+        description: 一级分类ID
+        x-message: 请输入
+        x-showTable: true
+      two_category_id:
+        type: string
+        format: uuid
+        description: 二级分类ID
+        x-message: 请输入
+        x-showTable: true
+      three_category_id:
+        type: string
+        format: uuid
+        description: 三级分类ID
+        x-message: 请输入
+        x-showTable: true
+      supplier_id:
+        type: string
+        format: uuid
+        description: 供应商ID
+        x-message: 请输入
+        x-showTable: true
+      picture:
+        type: string
+        format: string(255)
+        description: 商品头图
+        x-message: 请输入
+      pictures:
+        type: array
+        format: array
+        description: 商品图片
+        x-message: 请输入
+        items:
+          type: object
+      description:
+        type: string
+        format: string(255)
+        description: 描述
+        x-message: 请输入
+    example:
+      id: '123'
+      name: foo
+      category_id: '456'
+  Sku:
+    type: object
+    x-isModel: true
+    x-plural: Skus
+    x-tableName: sku
+    description: 单品
+    required:
+      - id
+      - sku_no
+      - name
+      - product_id
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      sku_no:
+        type: string
+        format: string(64)
+        description: 单品代码
+        x-message: 请输入
+        x-showTable: true
+      name:
+        type: string
+        format: string(64)
+        description: 单品名称
+        x-message: 请输入
+        x-showTable: true
+      product_id:
+        type: string
+        format: uuid
+        description: 商品ID
+        x-message: 请输入
+        x-showTable: true
+      price:
+        type: integer
+        format: int32
+        description: 价格
+        x-message: 请输入
+        x-showTable: true
+        x-showFilter: true
+        x-showSorter: true
+      unit:
+        type: string
+        format: string(16)
+        description: 单位
+        x-message: 请输入
+        x-showTable: true
+      stock:
+        type: integer
+        format: int32
+        description: 库存
+        x-message: 请输入
+        x-showTable: true
+        x-showFilter: true
+        x-showSorter: true
+      if_shelf:
+        type: boolean
+        format: boolean
+        description: 是否上架
+        default: true
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+      picture:
+        type: string
+        format: string(255)
+        description: 单品头图
+        x-message: 请输入
+      pictures:
+        type: array
+        format: array
+        description: 单品图片
+        x-message: 请输入
+        items:
+          type: object
+      description:
+        type: string
+        format: string(255)
+        description: 描述
+        x-message: 请输入
+    example:
+      id: '123'
+      sku_no: '456'
+      name: foo
+      product_id: '234'
+  Property:
+    type: object
+    x-isModel: true
+    x-plural: Propertys
+    x-tableName: property
+    description: 属性名
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      name:
+        type: string
+        format: string(64)
+        description: 属性名称
+        x-message: 请输入
+        x-showTable: true
+      data_type:
+        type: integer
+        format: int4
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+        default: 1
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '1': 整数
+          '2': 浮点
+          '3': 字符串
+          '4': 布尔
+          '5': 对象
+          '6': 列表
+        x-description: 数据类型
+        description: |
+          "数据类型"
+            * 1 - 整数
+            * 2 - 浮点
+            * 3 - 字符串
+            * 4 - 布尔
+            * 5 - 对象
+            * 6 - 列表
+      form_type:
+        type: integer
+        format: int4
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          - 14
+          - 15
+        default: 1
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '1': 输入框（文字）
+          '2': 输入框（数字）
+          '3': 输入框（多行）
+          '4': 输入框（富文本）
+          '5': 选择框（下拉）
+          '6': 选择框（日期）
+          '7': 选择框（时间）
+          '8': 选择框（日期+时间）
+          '9': 单选
+          '10': 多选
+          '11': 开关
+          '12': 滑块
+          '13': 文件上传
+          '14': 图片上传
+          '15': 地图选点
+        x-description: 表单类型
+        description: |
+          "表单类型"
+            * 1 - 输入框（文字）
+            * 2 - 输入框（数字）
+            * 3 - 输入框（多行）
+            * 4 - 输入框（富文本）
+            * 5 - 选择框（下拉）
+            * 6 - 选择框（日期）
+            * 7 - 选择框（时间）
+            * 8 - 选择框（日期+时间）
+            * 9 - 单选
+            * 10 - 多选
+            * 11 - 开关
+            * 12 - 滑块
+            * 13 - 文件上传
+            * 14 - 图片上传
+            * 15 - 地图选点
+      view_type:
+        type: integer
+        format: int4
+        enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+        default: 1
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '1': 字符
+          '2': 富文本
+          '3': 图片
+          '4': 视频
+          '5': 时间
+          '6': 金额
+          '7': 色彩
+        x-description: 展现类型
+        description: |
+          "展现类型"
+            * 1 - 字符
+            * 2 - 富文本
+            * 3 - 图片
+            * 4 - 视频
+            * 5 - 时间
+            * 6 - 金额
+            * 7 - 色彩
+      extra_info:
+        type: object
+        format: object
+        description: 额外信息
+        x-message: 请输入
+    example:
+      id: '123'
+      name: foo
+  PropertyGroup:
+    type: object
+    x-isModel: true
+    x-plural: PropertyGroups
+    x-tableName: property_group
+    description: 属性组名
+    required:
+      - id
+      - category_id
+      - name
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      category_id:
+        type: string
+        format: uuid
+        description: 分类ID
+        x-message: 请输入
+        x-showTable: true
+      name:
+        type: string
+        format: string(64)
+        description: 属性组名称
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+    example:
+      id: '123'
+      category_id: '456'
+      name: foo
+      sort: 0
+  CategoryProperty:
+    type: object
+    x-isModel: true
+    x-plural: CategoryPropertys
+    x-tableName: category_property
+    description: 某分类的商品属性
+    required:
+      - id
+      - category_id
+      - property_id
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      category_id:
+        type: string
+        format: uuid
+        description: 分类ID
+        x-message: 请输入
+        x-showTable: true
+      property_id:
+        type: string
+        format: uuid
+        description: 分类ID
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+    example:
+      id: '123'
+      category_id: '456'
+      property_id: '789'
+      sort: 0
+  ProductProperty:
+    type: object
+    x-isModel: true
+    x-plural: ProductPropertys
+    x-tableName: product_property
+    description: 某商品的单品属性
+    required:
+      - id
+      - product_id
+      - property_id
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      product_id:
+        type: string
+        format: uuid
+        description: 分类ID
+        x-message: 请输入
+        x-showTable: true
+      property_id:
+        type: string
+        format: uuid
+        description: 分类ID
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+    example:
+      id: '123'
+      product_id: '456'
+      property_id: '789'
+      sort: 0
+  ProductPropertyValue:
+    type: object
+    x-isModel: true
+    x-plural: ProductPropertyValues
+    x-tableName: product_property_value
+    description: 商品属性值
+    required:
+      - id
+      - product_id
+      - property_id
+      - value
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      product_id:
+        type: string
+        format: uuid
+        description: 商品ID
+        x-message: 请输入
+        x-showTable: true
+      property_id:
+        type: string
+        format: uuid
+        description: 属性ID
+        x-message: 请输入
+        x-showTable: true
+      value:
+        type: string
+        format: string(255)
+        description: 属性值
+        x-message: 请输入
+        x-showTable: true
+      propertygroup_id:
+        type: string
+        format: uuid
+        description: 属性ID
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+    example:
+      id: '123'
+      category_id: '456'
+      property_id: '789'
+      sort: 0
+  SkuPropertyValue:
+    type: object
+    x-isModel: true
+    x-plural: SkuPropertyValues
+    x-tableName: product_property_value
+    description: 单品属性值
+    required:
+      - id
+      - sku_id
+      - property_id
+      - value
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      sku_id:
+        type: string
+        format: uuid
+        description: 商品ID
+        x-message: 请输入
+        x-showTable: true
+      property_id:
+        type: string
+        format: uuid
+        description: 属性ID
+        x-message: 请输入
+        x-showTable: true
+      value_string:
+        type: string
+        format: string(255)
+        description: 属性值
+        x-message: 请输入
+      value_int:
+        type: integer
+        format: int32
+        description: 属性值
+        x-message: 请输入
+      value_float:
+        type: number
+        format: float
+        description: 属性值
+        x-message: 请输入
+      value_boolean:
+        type: boolean
+        format: boolean
+        description: 属性值
+        x-message: 请输入
+      value_object:
+        type: object
+        format: object
+        description: 属性值
+        x-message: 请输入
+      value_array:
+        type: array
+        format: array
+        description: 属性值
+        x-message: 请输入
+        items:
+          type: object
+      propertygroup_id:
+        type: string
+        format: uuid
+        description: 属性ID
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+    example:
+      id: '123'
+      sku_id: '456'
+      property_id: '789'
+      sort: 0
+  LabelGroup:
+    type: object
+    x-isModel: true
+    x-plural: LabelGroups
+    x-tableName: label_group
+    description: 某分类的标签组
+    required:
+      - id
+      - category_id
+      - group_name
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      category_id:
+        type: string
+        format: uuid
+        description: 分类ID
+        x-message: 请输入
+        x-showTable: true
+      group_name:
+        type: string
+        format: string(64)
+        description: 分组名
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+    example:
+      id: '123'
+      category_id: '456'
+      group_name: ok
+      sort: 0
+  ProductLable:
+    type: object
+    x-isModel: true
+    x-plural: ProductLabels
+    x-tableName: product_label
+    description: 商品标签
+    required:
+      - id
+      - product_id
+      - lable_group_id
+      - lable
+      - sort
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      product_id:
+        type: string
+        format: uuid
+        description: 商品ID
+        x-message: 请输入
+        x-showTable: true
+      lable_group_id:
+        type: string
+        format: uuid
+        description: 属性ID
+        x-message: 请输入
+        x-showTable: true
+      lable:
+        type: string
+        format: string(255)
+        description: 属性值
+        x-message: 请输入
+        x-showTable: true
+      sort:
+        type: integer
+        format: int32
+        description: 排序
+        default: 0
+        x-message: 请输入
+        x-showTable: true
+        x-showSorter: true
+    example:
+      id: '123'
+      product_id: '456'
+      lable_group_id: '789'
+      lable: ok
+  UserDemo:
+    type: object
+    description: 用户模型
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        description: ID
+      name:
+        type: string
+        description: 用户名
+      avatar:
+        type: string
+        description: 头像
+      email:
+        type: string
+        description: 邮箱
+    example:
+      name: Admin
+      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
+      id: '00000001'
+      email: test@test.com
+  LoginBody:
+    type: object
+    description: 登录参数模型
+    required:
+      - userName
+      - password
+      - type
+    properties:
+      userName:
+        type: string
+        description: 用户名
+      password:
+        type: string
+        description: 密码
+      type:
+        type: string
+        description: 账户类型
+    example:
+      userName: admin
+      password: '123456'
+      type: username
+  LoginResponse:
+    type: object
+    description: 登录返回数据模型
+    required:
+      - status
+      - type
+      - currentAuthority
+      - authtoken
+    properties:
+      status:
+        type: string
+        description: 登录状态
+      type:
+        type: string
+        description: 账号类型
+      currentAuthority:
+        type: string
+        description: 当前角色
+      authtoken:
+        type: string
+        description: 秘钥
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem'
+    required:
+      - message
+  ErrorItem:
+    type: object
+    properties:
+      errcode:
+        type: integer
+      errmsg:
+        type: string
+responses:
+  NotFound:
+    description: The specified resource was not found
+    schema:
+      $ref: '#/definitions/Error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error'
