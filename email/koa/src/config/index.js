@@ -11,11 +11,21 @@ fse.ensureDirSync(logDir);
 export const LOG_PATH = logDir;
 export const EXPIRES_IN = '1h';
 export const FEEDS_HOST = 'https://api.github.com/feeds';
+export const SMTP_SERVER = {
+  host: 'smtp.exmail.qq.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'test@test.com',
+    pass: '******',
+  }
+};
 
 const defaultConfig = {
   LOG_PATH,
   EXPIRES_IN,
   FEEDS_HOST,
+  SMTP_SERVER,
 };
 
 const configMap = {
