@@ -1,9 +1,6 @@
 import Router from 'koa-router';
 import models from "../models";
 import nodemailer from 'nodemailer';
-import {
-	SMTP_SERVER,
-} from '../config';
 
 const router = new Router();
 
@@ -19,8 +16,25 @@ router.post("/", async (ctx, next) => {
 		ctx.throw('缺少参数')
 	}
 
+	const smtp = await models.Smtp.findOne({
+		where: {
+			sender,
+		}
+	});
+	if (!smtp) {
+		ctx.throw('发送人不存在')
+	}
+
+	const {
+		host,
+		port,
+		secure,
+		user,
+		pass,
+	} = smtp;
+	
 	const email = await models.Email.create({
-		sender: `${sender} <${SMTP_SERVER.auth.user}>`,
+		sender: `${sender} <${user}>`,
 		receivers,
 		subject,
 		text_body,
@@ -28,9 +42,17 @@ router.post("/", async (ctx, next) => {
 	});
 
 	try {
-		const transporter = nodemailer.createTransport(SMTP_SERVER);
+		const transporter = nodemailer.createTransport({
+			host,
+			port,
+			secure,
+			auth: {
+				user,
+				pass,
+			}
+		});
 		const info = await transporter.sendMail({
-			from: `${sender} <${SMTP_SERVER.auth.user}>`,
+			from: `${sender} <${user}>`,
 			to: receivers,
 			subject,
 			text: text_body,
