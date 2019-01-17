@@ -1,0 +1,1052 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Hello World App
+host: 'localhost:3000'
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: X-API-Key
+  JWT:
+    description: 'Authorization: Bearer {token}'
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - APIKeyHeader: []
+    JWT: []
+paths:
+  /account/login:
+    post:
+      summary: 登录
+      description: 登录...
+      security: []
+      parameters:
+        - in: body
+          name: body
+          description: 登录参数
+          required: true
+          schema:
+            $ref: '#/definitions/LoginBody'
+      responses:
+        '200':
+          description: 登录成功
+          schema:
+            $ref: '#/definitions/LoginResponse'
+  /account/user:
+    get:
+      summary: 查询当前用户
+      description: 查询当前用户..
+      responses:
+        '200':
+          description: 查询成功
+          headers:
+            authtoken:
+              type: string
+              description: 新token续期
+          schema:
+            $ref: '#/definitions/UserDemo'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          $ref: '#/responses/NotFound'
+  /promos:
+    post:
+      summary: 创建单个推广码
+      description: 创建单个推广码...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Promo'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个推广码
+      description: 查询多个推广码...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Promo'
+    patch:
+      summary: 更新多个推广码
+      description: 更新多个推广码...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Promo'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个推广码
+      description: 删除多个推广码...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/promos/{id}':
+    get:
+      summary: 查询单个推广码
+      description: 查询单个推广码..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Promo'
+    patch:
+      summary: 修改单个推广码
+      description: 修改单个推广码..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Promo'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个推广码
+      description: 删除单个推广码..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /promos/multiple:
+    post:
+      summary: 创建多个推广码
+      description: 创建多个推广码...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Promo'
+      responses:
+        '200':
+          description: 创建成功
+  /promo:
+    get:
+      summary: 查询单个推广码
+      description: 查询单个推广码...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Promo'
+    post:
+      summary: 查找或创建单个推广码
+      description: 查找或创建单个推广码...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Promo'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Promo'
+  /promoplans:
+    post:
+      summary: 创建单个推广计划
+      description: 创建单个推广计划...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/PromoPlan'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个推广计划
+      description: 查询多个推广计划...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/PromoPlan'
+    patch:
+      summary: 更新多个推广计划
+      description: 更新多个推广计划...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PromoPlan'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个推广计划
+      description: 删除多个推广计划...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/promoplans/{id}':
+    get:
+      summary: 查询单个推广计划
+      description: 查询单个推广计划..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/PromoPlan'
+    patch:
+      summary: 修改单个推广计划
+      description: 修改单个推广计划..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/PromoPlan'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个推广计划
+      description: 删除单个推广计划..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /promoplans/multiple:
+    post:
+      summary: 创建多个推广计划
+      description: 创建多个推广计划...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PromoPlan'
+      responses:
+        '200':
+          description: 创建成功
+  /promoplan:
+    get:
+      summary: 查询单个推广计划
+      description: 查询单个推广计划...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/PromoPlan'
+    post:
+      summary: 查找或创建单个推广计划
+      description: 查找或创建单个推广计划...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/PromoPlan'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/PromoPlan'
+  /tracks:
+    post:
+      summary: 创建单个推广码跟踪
+      description: 创建单个推广码跟踪...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Track'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个推广码跟踪
+      description: 查询多个推广码跟踪...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Track'
+    patch:
+      summary: 更新多个推广码跟踪
+      description: 更新多个推广码跟踪...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Track'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个推广码跟踪
+      description: 删除多个推广码跟踪...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/tracks/{id}':
+    get:
+      summary: 查询单个推广码跟踪
+      description: 查询单个推广码跟踪..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Track'
+    patch:
+      summary: 修改单个推广码跟踪
+      description: 修改单个推广码跟踪..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Track'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个推广码跟踪
+      description: 删除单个推广码跟踪..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /tracks/multiple:
+    post:
+      summary: 创建多个推广码跟踪
+      description: 创建多个推广码跟踪...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Track'
+      responses:
+        '200':
+          description: 创建成功
+  /track:
+    get:
+      summary: 查询单个推广码跟踪
+      description: 查询单个推广码跟踪...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Track'
+    post:
+      summary: 查找或创建单个推广码跟踪
+      description: 查找或创建单个推广码跟踪...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Track'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Track'
+  /shares:
+    post:
+      summary: 创建单个推广码分享
+      description: 创建单个推广码分享...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Share'
+      responses:
+        '200':
+          description: 创建成功
+    get:
+      summary: 查询多个推广码分享
+      description: 查询多个推广码分享...
+      parameters:
+        - in: query
+          name: pageNum
+          type: integer
+          description: 页码
+          default: 1
+        - in: query
+          name: pageSize
+          type: integer
+          description: 分页大小
+          default: 10
+        - in: query
+          name: sorter
+          type: string
+          description: 排序
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            type: object
+            properties:
+              count:
+                type: integer
+              rows:
+                type: array
+                items:
+                  $ref: '#/definitions/Share'
+    patch:
+      summary: 更新多个推广码分享
+      description: 更新多个推广码分享...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Share'
+      responses:
+        '200':
+          description: 更新成功
+    delete:
+      summary: 删除多个推广码分享
+      description: 删除多个推广码分享...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: object
+            example:
+              id:
+                - '1'
+                - '2'
+      responses:
+        '200':
+          description: 更新成功
+  '/shares/{id}':
+    get:
+      summary: 查询单个推广码分享
+      description: 查询单个推广码分享..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Share'
+    patch:
+      summary: 修改单个推广码分享
+      description: 修改单个推广码分享..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Share'
+      responses:
+        '200':
+          description: 修改成功
+    delete:
+      summary: 删除单个推广码分享
+      description: 删除单个推广码分享..
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+          description: ID
+      responses:
+        '200':
+          description: 删除成功
+  /shares/multiple:
+    post:
+      summary: 创建多个推广码分享
+      description: 创建多个推广码分享...
+      parameters:
+        - in: body
+          name: body
+          description: body参数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Share'
+      responses:
+        '200':
+          description: 创建成功
+  /share:
+    get:
+      summary: 查询单个推广码分享
+      description: 查询单个推广码分享...
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: 不限于id，可以是任意参数
+          required: true
+      responses:
+        '200':
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/Share'
+    post:
+      summary: 查找或创建单个推广码分享
+      description: 查找或创建单个推广码分享...
+      parameters:
+        - in: body
+          name: body
+          description: 模型参数
+          required: true
+          schema:
+            $ref: '#/definitions/Share'
+      responses:
+        '200':
+          description: 创建成功
+          schema:
+            $ref: '#/definitions/Share'
+definitions:
+  Promo:
+    type: object
+    x-isModel: true
+    x-plural: Promos
+    x-tableName: promo
+    description: 推广码
+    required:
+      - id
+      - promo_type
+      - promo_code
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      promo_type:
+        type: integer
+        format: int4
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+        default: 0
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '0': 默认
+          '1': VIP
+        x-description: 推广码类型
+        description: |
+          "推广码类型"
+            * 0 - 默认
+            * 1 - VIP
+      promo_code:
+        type: string
+        format: string(64)
+        description: 推广码
+        x-message: 请输入
+        x-showTable: true
+        uniqueItems: true
+      user_id:
+        type: string
+        format: uuid
+        description: 用户ID
+        x-message: 请输入
+        x-showTable: true
+    example:
+      id: '123'
+      promo_type: 0
+      promo_code: '001'
+      user_id: '123'
+  PromoPlan:
+    type: object
+    x-isModel: true
+    x-plural: PromoPlans
+    x-tableName: promo_plan
+    description: 推广计划
+    required:
+      - id
+      - plan_type
+      - plan_code
+      - promo_code
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      plan_type:
+        type: integer
+        format: int4
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+        default: 0
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '0': 默认
+          '1': URL
+          '2': 二维码
+          '3': 图片
+        x-description: 推广计划类型
+        description: |
+          "推广计划类型"
+            * 0 - 默认
+            * 1 - URL
+            * 2 - 二维码
+            * 3 - 图片
+      plan_code:
+        type: string
+        format: string(255)
+        description: 推广计划码
+        x-message: 请输入
+        x-showTable: true
+      promo_code:
+        type: string
+        format: string(64)
+        description: 推广码
+        x-message: 请输入
+        x-showTable: true
+      extra_info:
+        type: object
+        format: object
+        description: 额外信息
+        x-message: 请输入
+    example:
+      id: '123'
+      plan_type: 3
+      plan_code: 'http://test.com/abc.jpg'
+      promo_code: '001'
+  Track:
+    type: object
+    x-isModel: true
+    x-plural: Tracks
+    x-tableName: track
+    description: 推广码跟踪
+    required:
+      - id
+      - track_type
+      - plan_code
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      track_type:
+        type: integer
+        format: int4
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+        default: 0
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '0': 默认
+          '1': 访问
+          '2': 注册
+          '3': 业务
+        x-description: 跟踪类型
+        description: |
+          "跟踪类型"
+            * 0 - 默认
+            * 1 - 访问
+            * 2 - 注册
+            * 3 - 业务
+      promo_code:
+        type: string
+        format: string(64)
+        description: 推广码
+        x-message: 请输入
+        x-showTable: true
+      user_id:
+        type: string
+        format: uuid
+        description: 用户ID
+        x-message: 请输入
+        x-showTable: true
+      extra_info:
+        type: object
+        format: object
+        description: 额外信息
+        x-message: 请输入
+    example:
+      id: '123'
+      track_type: 0
+      promo_code: '001'
+      user_id: '123'
+  Share:
+    type: object
+    x-isModel: true
+    x-plural: Shares
+    x-tableName: share
+    description: 推广码分享
+    required:
+      - id
+      - share_type
+      - promo_code
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: ID
+        uniqueItems: true
+      share_type:
+        type: integer
+        format: int4
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+        default: 0
+        x-message: 请选择
+        x-showTable: true
+        x-showFilter: true
+        x-enumMap:
+          '0': 默认
+          '1': 小程序
+          '2': 公众号
+          '3': APP
+        x-description: 分享类型
+        description: |
+          "分享类型"
+            * 0 - 默认
+            * 1 - 小程序
+            * 2 - 公众号
+            * 3 - APP
+      promo_code:
+        type: string
+        format: string(64)
+        description: 推广码
+        x-message: 请输入
+        x-showTable: true
+      user_id:
+        type: string
+        format: uuid
+        description: 用户ID
+        x-message: 请输入
+        x-showTable: true
+      extra_info:
+        type: object
+        format: object
+        description: 额外信息
+        x-message: 请输入
+    example:
+      id: '123'
+      share_type: 0
+      promo_code: '001'
+      user_id: '123'
+  UserDemo:
+    type: object
+    description: 用户模型
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        description: ID
+      name:
+        type: string
+        description: 用户名
+      avatar:
+        type: string
+        description: 头像
+      email:
+        type: string
+        description: 邮箱
+    example:
+      name: Admin
+      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'
+      id: '00000001'
+      email: test@test.com
+  LoginBody:
+    type: object
+    description: 登录参数模型
+    required:
+      - userName
+      - password
+      - type
+    properties:
+      userName:
+        type: string
+        description: 用户名
+      password:
+        type: string
+        description: 密码
+      type:
+        type: string
+        description: 账户类型
+    example:
+      userName: admin
+      password: '123456'
+      type: username
+  LoginResponse:
+    type: object
+    description: 登录返回数据模型
+    required:
+      - status
+      - type
+      - currentAuthority
+      - authtoken
+    properties:
+      status:
+        type: string
+        description: 登录状态
+      type:
+        type: string
+        description: 账号类型
+      currentAuthority:
+        type: string
+        description: 当前角色
+      authtoken:
+        type: string
+        description: 秘钥
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorItem'
+    required:
+      - message
+  ErrorItem:
+    type: object
+    properties:
+      errcode:
+        type: integer
+      errmsg:
+        type: string
+responses:
+  NotFound:
+    description: The specified resource was not found
+    schema:
+      $ref: '#/definitions/Error'
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error'
