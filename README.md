@@ -29,3 +29,8 @@
 | order   | 3007     | 9307         | [订单及支付](./order)   |
 | staff   | 3008     | 9308         | [员工及权限](./staff)   |
 | upload  | 3009     | 9309         | [文件上传下载](./upload) |
+| email   | 3010     | 9310         | [邮件发送](./email)    |
+| product | 3011     | 9311         | [商品](./product)    |
+| promo   | 3012     | 9312         | [推广](./promo)      |
+| stock   | 3013     | 9313         | [库存](./stock)      |
+| wxacode | 3014     | 9314         | [小程序码](./wxacode)  |
