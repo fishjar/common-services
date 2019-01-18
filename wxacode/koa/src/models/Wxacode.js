@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       appid: {
         type: DataTypes.STRING(32),
         allowNull: false,
-        unique: true,
+        unique: false,
         validate: {},
       },
       code_type: {
@@ -18,19 +18,19 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
         unique: false,
         validate: {
-          isIn: [[A, B, C]],
+          isIn: [["a", "b", "c"]],
         },
       },
-      path: {
+      page: {
         type: DataTypes.STRING(128),
-        allowNull: false,
-        unique: true,
+        allowNull: true,
+        unique: false,
         validate: {},
       },
       scene: {
         type: DataTypes.STRING(32),
         allowNull: true,
-        unique: true,
+        unique: false,
         validate: {},
       },
       width: {

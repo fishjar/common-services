@@ -249,41 +249,38 @@ definitions:
         description: APPID
         x-message: 请输入
         x-showTable: true
-        uniqueItems: true
       code_type:
         type: string
         format: string(1)
         enum:
-          - A
-          - B
-          - C
+          - a
+          - b
+          - c
         x-message: 请选择
         x-showTable: true
         x-showFilter: true
         x-enumMap:
-          A: 接口A
-          B: 接口B
-          C: 接口C
+          a: 接口A
+          b: 接口B
+          c: 接口C
         x-description: 接口类型
         description: |
           "接口类型"
-            * A - 接口A
-            * B - 接口B
-            * C - 接口C
-      path:
+            * a - 接口A
+            * b - 接口B
+            * c - 接口C
+      page:
         type: string
         format: string(128)
         description: 小程序页面路径
         x-message: 请输入
         x-showTable: true
-        uniqueItems: true
       scene:
         type: string
         format: string(32)
         description: 场景参数
         x-message: 请输入
         x-showTable: true
-        uniqueItems: true
       width:
         type: integer
         format: int4

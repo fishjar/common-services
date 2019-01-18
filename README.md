@@ -5,15 +5,19 @@
 ```sh
 ├── corp
 ├── deliver
-├── LICENSE
+├── email
 ├── order
-├── README.md
+├── product
+├── promo
 ├── staff
+├── stock
 ├── upload
 ├── user
+├── wxacode
 ├── wxapp
 ├── wxpay
 └── wxuser
+
 ```
 
 ## 开发端口分配
