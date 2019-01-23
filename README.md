@@ -38,3 +38,4 @@
 | promo   | 3012     | 9312         | [推广](./promo)      |
 | stock   | 3013     | 9313         | [库存](./stock)      |
 | wxacode | 3014     | 9314         | [小程序码](./wxacode)  |
+| wxacode | 3015     | 9315         | [消息队列](./rabbitmq) |
