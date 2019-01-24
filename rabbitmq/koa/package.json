@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./dist/server.js",
     "dev": "cross-env NODE_ENV=development DEBUG=koa* nodemon --inspect=0.0.0.0:9315 ./src/server.js",
-    "mqall": "cross-env NODE_ENV=development nodemon --inspect=0.0.0.0:9439 ./src/consumer/mqall.js",
+    "mqall": "cross-env NODE_ENV=development nodemon --inspect=0.0.0.0:9439 ./src/consumer/mqall2.js",
     "mqtest": "cross-env NODE_ENV=development nodemon --inspect=0.0.0.0:9400 ./src/consumer/mqtest.js",
     "queue": "cross-env NODE_ENV=development nodemon --inspect=0.0.0.0:9401 ./src/consumer/queue.js",
     "fanout": "cross-env NODE_ENV=development nodemon --inspect=0.0.0.0:9402 ./src/consumer/fanout.js",
