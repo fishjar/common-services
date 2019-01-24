@@ -9,9 +9,9 @@ import { consumer } from '../lib/mq';
     await Promise.all(keys.map(key => ch.bindQueue(q.queue, ex, key)));
     await ch.consume(q.queue, res => {
       const msg = JSON.parse(res.content.toString());
-      console.log('msg', msg);
+      console.log('msg', 'topic', msg);
       // do something...
     }, { noAck: true });
-    console.log(' [*] Waiting for messages. To exit press CTRL+C');
+    console.log(' [*] Waiting for topic messages. To exit press CTRL+C');
   })
 })();

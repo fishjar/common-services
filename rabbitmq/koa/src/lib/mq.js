@@ -27,7 +27,7 @@ export const consumer = async dosth => {
     await dosth(ch);
     process.once('SIGINT', function () { conn.close(); });
   } catch (err) {
-    const newErr = new Error('创建任务队列出错');
+    const newErr = new Error('消费任务队列出错');
     newErr.errors = [{
       errcode: err.code,
       errmsg: err.message,

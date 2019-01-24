@@ -5,7 +5,7 @@ const router = new Router();
 
 
 // Work queues
-router.post('/task', async (ctx, next) => {
+router.post('/queue', async (ctx, next) => {
 	const {
 		queue = 'task_queue',
 		msg,
