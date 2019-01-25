@@ -1,7 +1,8 @@
 import { consumer } from '../lib/mq';
 
-// Work queues
 (async () => {
+
+  // Work queues
   await consumer(async ch => {
     const queue = 'task_queue';
     const q = await ch.assertQueue(queue, { durable: true });
@@ -13,11 +14,9 @@ import { consumer } from '../lib/mq';
       await ch.ack(res);
     }, { noAck: false });
     console.log(' [*] Waiting for queue messages. To exit press CTRL+C');
-  })
-})();
+  });
 
-// Publish/Subscribe
-(async () => {
+  // Publish/Subscribe
   await consumer(async ch => {
     const ex = 'msgs';
     await ch.assertExchange(ex, 'fanout', { durable: false });
@@ -29,11 +28,9 @@ import { consumer } from '../lib/mq';
       // do something...
     }, { noAck: true });
     console.log(' [*] Waiting for fanout messages. To exit press CTRL+C');
-  })
-})();
+  });
 
-// Routing
-(async () => {
+  // Routing
   await consumer(async ch => {
     const ex = 'direct_msgs';
     const severities = ['info', 'warning', 'error'];
@@ -46,11 +43,9 @@ import { consumer } from '../lib/mq';
       // do something...
     }, { noAck: true });
     console.log(' [*] Waiting for direct messages. To exit press CTRL+C');
-  })
-})();
+  });
 
-// Topics
-(async () => {
+  // Topics
   await consumer(async ch => {
     const ex = 'topic_msgs';
     const keys = ['#', '"kern.*', '*.critical'];
@@ -63,5 +58,6 @@ import { consumer } from '../lib/mq';
       // do something...
     }, { noAck: true });
     console.log(' [*] Waiting for topic messages. To exit press CTRL+C');
-  })
+  });
+
 })();

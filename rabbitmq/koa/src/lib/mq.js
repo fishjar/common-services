@@ -3,13 +3,17 @@ import {
   AMQP_URL,
 } from '../config';
 
+let conn;
+
 export const publisher = async dosth => {
   try {
-    const conn = await amqplib.connect(AMQP_URL);
+    if (!conn) {
+      conn = await amqplib.connect(AMQP_URL);
+    }
     const ch = await conn.createChannel();
     await dosth(ch);
     await ch.close();
-    await conn.close();
+    // await conn.close();
   } catch (err) {
     const newErr = new Error('创建任务队列出错');
     newErr.errors = [{
@@ -22,10 +26,12 @@ export const publisher = async dosth => {
 
 export const consumer = async dosth => {
   try {
-    const conn = await amqplib.connect(AMQP_URL);
+    if (!conn) {
+      conn = await amqplib.connect(AMQP_URL);
+    }
     const ch = await conn.createChannel();
     await dosth(ch);
-    process.once('SIGINT', function () { conn.close(); });
+    // process.once('SIGINT', function () { conn.close(); });
   } catch (err) {
     const newErr = new Error('消费任务队列出错');
     newErr.errors = [{
