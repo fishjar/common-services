@@ -36,7 +36,7 @@ router.post('/', async (ctx, next) => {
 		}]
 	});
 
-	ctx.body = res;
+	ctx.body = res.result;
 	await next();
 });
 
