@@ -39,4 +39,4 @@
 | stock    | 3013     | 9313         | [库存](./stock)      |
 | wxacode  | 3014     | 9314         | [小程序码](./wxacode)  |
 | rabbitmq | 3015     | 9315         | [消息队列](./rabbitmq) |
-| baiduai  | 3015     | 9315         | [百度AI](./baiduai)  |
+| baiduai  | 3016     | 9316         | [百度AI](./baiduai)  |
